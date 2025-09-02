@@ -1,0 +1,31 @@
+<div th:fragment="formulaire_attribution">
+    <ul class="flex-outer">
+        <li>
+            <label> Groupes rattachés :</label>
+                <li data-th-each="item : ${groupelist}">
+                    <input type="radio" th:value="${item}"  />
+                    <label data-th-text="${item.nom}"></label>
+                    <a class="bouton" data-th-href="@{/personnages/suppr_perso_equipage(idGroupe=${item.id}, idPerso=${personnage.id})}">suppression</a>
+                </li>
+        </li>
+
+        <form data-th-action="@{/personnages/miseajour_attribution}"
+              method="post"
+              data-th-object="${personnage}" >
+            <input data-th-field="*{id}" hidden>
+
+            <li>
+                <label> Attribuer à un nouveau groupe :</label>
+                <select id="idGroupe" data-th-field="*{groupeEnPlus}" >
+                    <option data-th-each="item : ${listeGroupes}"
+                            data-th-text="${item?.nom}"
+                            data-th-value="${item.id}"></option>
+                </select>
+                <br>
+                <button type="submit">Ajouter groupe</button>
+            </li>
+
+        </form>
+    </ul>
+
+</div>

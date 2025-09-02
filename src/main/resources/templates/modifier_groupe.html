@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Détail de cet équipage')}">
+
+<main>
+    <h2>Composition du groupe</h2>
+    <div th:replace="modifier_attribution_equipage :: formulaire_equipage"></div>
+    <h2>Modifier le groupe</h2>
+    <form data-th-action="@{/groupes/miseajour}"
+          method="post"
+          data-th-object="${groupe}" >
+    <ul class="flex-outer">
+      <input data-th-field="*{id}" hidden>
+      <li>
+        <label for="idNom">Nom de l'équipage :</label>
+        <input id="idNom" type=text data-th-field="*{nom}" pattern="[a-zA-Z0-9_:-]{200}"/>
+      </li>
+
+    <!--  <li>
+        <label >Membres :</label>
+          <li th:each="ty : ${membres}" >
+              <label th:text="${ty.nom + ' ' + ty.particule + ' ' + ty.prenom + ' (' + ty.surnom + ')'}"></label>
+          </li>
+
+            <li>
+                <a class="bouton" data-th-href="@{/groupes/miseajour_equipage(idGroupe=${groupe.getId()})}">Modifier equipage</a>
+            </li> -->
+
+   <li>
+       <label for="idCapitaine">Capitaine</label>
+       <select id="idCapitaine" data-th-field="*{capitaine}">
+
+           <option data-th-each="item : ${listePersonnages}"
+                   data-th-text="${item?.nom + ' ' + item.prenom}"
+                   data-th-value="${item.id}">
+           </option>
+       </select>
+   </li>
+
+      <li>
+        <button type="submit">Sauvegarder</button>
+          <a class="bouton" th:text="Annuler" data-th-href="@{/groupes/details(idGroupe=${groupe.getId()})}"></a>
+          <a class="bouton" th:text="Suppression" data-th-href="@{/groupes/suppr_groupe(idGroupe=${groupe.getId()})}"></a>
+      </li>
+    </ul>
+  </form>
+
+</main>
+
+
+</html>

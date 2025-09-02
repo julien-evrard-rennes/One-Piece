@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Détail de cet équipage')}">
+
+<main>
+  <h2><div data-th-text="${ 'Listes des membres de ' + groupe.nom + '.' }"></div></h2>
+
+  <form
+          data-th-action="@{/groupes/details}"
+          method="post"
+          data-th-object="${groupe}"  >
+    <ul class="flex-outer">
+      <ul>
+        <label><b>Membres :</b></label>
+        <ul>
+          <a data-th-each="item : ${membres}"
+             data-th-href="@{/personnages/details(idPerso=${item.id})}">
+            <li> <td data-th-text="${item.nom + ' ' + item.particule + ' ' + item.prenom}">
+              <td data-th-if="${item.surnom != null}" data-th-text="${' (' + item.surnom + ')'}" ></td>
+            </li>
+          </a>
+        </ul>
+      </li>
+      <li>
+      <data-li-block data-th-if="${groupe.capitaine != null && groupe.capitaine.id > 0}">
+        <label ><b>Capitaine :</b></label>
+          <ul>
+        <a data-th-href="@{/personnages/details(idPerso=${groupe.capitaine.id})}">
+          <data-table-block data-th-if="${groupe.capitaine.nom != null && groupe.capitaine.surnom != '?'}">
+            <li data-th-text=" ${groupe.capitaine?.nom + ' ' + groupe.capitaine?.particule + ' ' + groupe.capitaine.prenom }">
+              <div  data-th-if="${groupe.capitaine.surnom != null }"
+                    data-th-text="*{' (' + capitaine.surnom + ') '}" ></div>
+            </li>
+          </data-table-block>
+          <data-table-block data-th-if="${groupe.capitaine.nom == null }">
+            <li data-th-text=" ${groupe.capitaine?.particule + ' ' + groupe.capitaine.prenom}">
+              <div  data-th-if="${groupe.capitaine.surnom != null }"
+                    data-th-text="*{' (' + capitaine.surnom + ') '}" ></div>
+            </li>
+          </data-table-block>
+        </a>
+        </ul>
+      </data-li-block>
+      </li>
+      <li class="bouton">
+        <td ><a data-th-href="@{/groupes/miseajour(idGroupe=*{id})}">MODIFIER</a></td>
+        <td><a class="bouton" th:text="Supression" data-th-href="@{/groupes/suppr_groupe(idGroupe=${groupe.getId()})}"></a></td>
+      </li>
+    </ul>
+  </form>
+
+</main>
+
+
+
+
+
+
+
+</html>

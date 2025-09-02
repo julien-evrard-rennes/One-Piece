@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Création fiche de personnage')}">
+
+ <h2><div data-th-text="${erreur}" ></div></h2>
+
+<main>
+    <form
+            data-th-action="@{/personnages/creer}"
+            method="post"
+            data-th-object="${personnage}"  >
+        <ul class="flex-outer">
+
+            <li>
+                <label for="idName">Nom :</label>
+                <input id="idName" type=text data-th-field="*{nom}" pattern="[a-zA-Z0-9_:-]{100}"/>
+            </li>
+            <li>
+                <label for="idParticule">Particule :</label>
+                <td data-th-text="*{particule}"></td>
+                <input type="checkbox"  id="idParticule" name="particule" data-th-field="*{particuleCheck}"  />
+            </li>
+            <li>
+                <label for="idPrenom">Prenom * :</label>
+                <input id="idPrenom" type=text data-th-field="*{prenom}" pattern="[a-zA-Z0-9_:-]{100}"/>
+            </li>
+            <li>
+                <label for="idSurnom">Surnom :</label>
+                <input id="idSurnom" type=text data-th-field="*{surnom}" pattern="[a-zA-Z0-9_:-]{150}"/>
+            </li>
+
+            <li>
+                <label for="idAge">Age * ("inconnu" = 0) :</label>
+                <input id="idAge" type=number data-th-field="*{age}" required/>
+            </li>
+
+            <li>
+                <label >Genre :</label>
+                <td th:each="ty : ${ListeSexes}">
+                    <input type="radio" th:field="*{genreCheck}" th:value="${ty}"  />
+                    <label th:text="${ty}">Wireframe</label>
+                </td>
+            </li>
+
+           <li>
+                <label for="idPrime">Prime * ("inconnu" = 0) :</label>
+                <input id="idPrime" type=number data-th-field="*{prime}" required/>
+            </li>
+
+            <li> * champs obligatoires</li>
+
+          <!--  <li>
+                <label for="idGroupes">Groupes :</label>
+                <script src="/js/formulaire.js" ></script>
+                <form name="export" method="post" OnSubmit="javascript: soumettre_1liste( document.forms[0].choix );" action="export.php">
+
+                    <table class ="uniforme">
+                        <tr>
+                            <td><br /></td>
+                            <td>Champ(s) disponible(s)</td>
+                            <td><br /></td>
+                            <td>Champ(s) sélectionné(s)</td>
+                            <td><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td rowspan="7">
+                                <select name="dispo[]" id="dispo"
+                                        size="16"
+                                        multiple="multiple"
+                                        OnClick="javascript: deplacer( this.form.dispo, this.form.choix );">
+                                    <option data-th-each="item : ${listeGroupes}"
+                                            data-th-text="${item.nom }"
+                                            data-th-value="${item.id}"></option>
+                                </select><br />
+                            </td>
+
+                            <td><br /></td>
+                            <td rowspan="7">
+                                <select name="choix[]" id="idGroupes" data-th-field="*{groupeList}"
+                                         size="16" multiple="multiple"
+                                        OnDblClick="javascript: deplacer( this.form.choix, this.form.dispo );">
+                                </select><br />
+                            </td>
+                            <td><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td><input type="button" value="ajouter >" OnClick="javascript: deplacer( this.form.dispo, this.form.choix );" /><br /></td>
+                            <td rowspan="2"><input type="button" value="Monter" OnClick="javascript: deplacer_hautbas( this.form.choix, -1 );" /><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td><input type="button" value="ajouter tout >>" OnClick="javascript: deplacer_tout( this.form.dispo, this.form.choix );" /><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td><br /></td>
+                            <td><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td><input type="button" value="< retirer" OnClick="javascript: deplacer( this.form.choix, this.form.dispo );" /><br /></td>
+                            <td rowspan="2"><input type="button" value="Descendre" OnClick="javascript: deplacer_hautbas( this.form.choix, 1 );" /><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td><input type="button" value="<< retirer tout" OnClick="javascript: deplacer_tout( this.form.choix, this.form.dispo );" /><br /></td>
+                        </tr>
+
+                        <tr>
+                            <td><br /></td>
+                            <td><br /></td>
+                            <td><br /></td>
+                        </tr>
+
+                    </table>
+                </form>
+
+            </li> -->
+
+            <li>
+                <button type="submit">Sauvegarder</button>
+            </li>
+        </ul>
+    </form>
+
+</main>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Liste des équipages')}">
+<main>
+     <h2><div data-th-text="${ 'Il y a ' + groupeListSize +' équipages enregistrés ' }"></div></h2>
+        <table>
+        <thead>
+        <tr>
+            <th>Équipage</th>
+            <th>Détails</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="item : ${groupeLst}">
+            <td data-th-text="${item.nom}"></td>
+            <td><a data-th-href="@{/groupes/details(idGroupe=${item.id})}">Détails</a></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</html>

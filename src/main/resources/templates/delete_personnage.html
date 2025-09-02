@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Supprimer ce personnage')}">
+
+<main>
+
+    <form  data-th-action="@{/personnages/suppr_personnage}"
+           data-th-object="${personnage}"
+            method="post">
+        <ul class="flex-outer">
+        <input data-th-value="*{id}" data-th-field="*{id}" hidden />
+<li>
+        <data-table-block data-th-if="${personnage.nom !='' && personnage.particule != '?'}">
+            <h2 th:text="${'Tenez vous à supprimer ' + personnage?.nom + ' ' + personnage.particule + ' ' + personnage?.prenom +  ' ? '}">
+            </h2>
+        </data-table-block>
+
+        <data-table-block data-th-if="${personnage.nom !='' && personnage.particule == '?'}">
+            <h2 th:text="${'Voulez-vous supprimer ' + personnage?.nom + ' ' + personnage?.prenom +  ' ? '}">
+            </h2>
+            </data-table-block>
+
+        <data-table-block data-th-if="${personnage.nom == ''}">
+            <h2 th:text="${'Voulez-vous vraiment supprimer ' + personnage?.prenom +  ' ? '}">
+            </h2>
+        </data-table-block>
+
+</li>
+        <div>
+            <br/>
+            <li class="supp-bouton">
+                <td><button type="submit">oui</button></td>
+                <td><button><a class="bouton" data-th-href="@{/personnages/details(idPerso=*{id})}">Non</a></button></td>
+            </li>
+        </div>
+        </ul>
+    </form>
+</main>
+</html>

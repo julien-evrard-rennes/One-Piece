@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Supprimer ce personnage')}">
+
+<main>
+
+    <form  data-th-action="@{/groupes/suppr_groupe}"
+           data-th-object="${groupe}"
+            method="post">
+        <ul class="flex-outer">
+        <input data-th-value="*{id}" data-th-field="*{id}" hidden />
+<li>
+        <h2 th:text="${'Voulez-vous vraiment supprimer ' + groupe.nom +  ' ? '}"> </h2>
+</li>
+            <li class="supp-bouton">
+                <td><button type="submit">oui</button></td>
+                <td><button><a class="bouton" data-th-href="@{/groupes/details(idGroupe=*{id})}">Non</a></button></td>
+            </li>
+        </ul>
+    </form>
+</main>
+</html>

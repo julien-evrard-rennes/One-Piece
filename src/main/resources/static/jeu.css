@@ -1,0 +1,134 @@
+
+main {
+}
+
+h2 {
+    font-style:oblique;
+    color: #170505;
+    margin:15px;
+    padding:5px;
+}
+
+table.tirage tr {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+}
+
+table.tirage th {
+    padding: 5px;
+    margin: 15px;
+    background-color: #cae1fd;
+    color: #211111;
+    font-size: xx-large;
+    border: 2px solid #8084a1;
+    border-radius: 15%;
+    display: flex;
+    justify-content: center;
+}
+
+table.tirage tr:hover {
+    background-color:white;
+}
+
+table.tirage th.interclasse {
+    border:none;
+    background-color: #ffffff;
+    color: #b33939;
+}
+
+div.reponse {
+    background-color: aliceblue;
+    padding: 10px;
+    margin: 10px;
+    font-size: x-large;
+}
+
+div.reponse button {
+    margin-top: 8px;
+    margin-left: 10px;
+    margin-bottom: 5px; padding : 8px 8px;
+    background: #060459;
+    border:none;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+}
+
+div.reponse button:hover {
+    background-color: #5d85ec;
+}
+
+div.reponse div{
+    display: flex;
+    justify-content: space-around;
+
+}
+
+div.score {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15%;
+    padding: 5px;
+
+}
+
+div.resultat{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+    display: flex;
+    justify-content: space-evenly;
+    margin-right: 15%;
+    padding: 5px;
+    background-color: #fff0f0;
+    flex-wrap: wrap;
+}
+
+div.resultat p{
+flex:inherit;
+}
+
+p.chiffre_score {
+    animation-name: fadeIn, slidein;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    opacity:0;
+}
+
+@keyframes slidein {
+    from {
+        margin-top:0%;
+    }
+
+    to {
+        margin-top:-3%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity:1;
+    }
+    to {
+        opacity:0;
+    }
+}
+
+
+p.chiffre_score_definitif {
+    margin-left:-15px;
+}
+
+input#idName {
+    text-align: center;
+    margin: 10px;
+    width: 250px;
+    height: 30px;
+}

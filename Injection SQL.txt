@@ -1,0 +1,33 @@
+
+--Supprime les tables si elles existent
+-- DROP TABLE [PERSONNAGE];
+-- DROP TABLE [GROUPE];
+-- DROP TABLE [ATTRIBUTION];
+
+--Crée la table PERSONNAGE
+CREATE TABLE [PERSONNAGE](
+	[id] int NOT NULL PRIMARY KEY IDENTITY ,
+	[prenom] [NVARCHAR](255) NOT NULL ,
+	[nom] [NVARCHAR](255) ,
+	[surnom] [NVARCHAR](255)  ,
+	[particule] [CHAR](1) ,
+	[sexe] [CHAR](1) ,
+	[age] int ,
+	[prime] BIGINT );
+
+--Crée la table GROUPE
+CREATE TABLE [GROUPE](
+	[id] int NOT NULL PRIMARY KEY IDENTITY,
+	[nom_groupe] [NVARCHAR](255) NOT NULL,
+	[id_capitaine] int);
+
+--Crée la table ATTRIBUTION
+CREATE TABLE [ATTRIBUTION](
+	[id_personnage] int NOT NULL,
+	[id_groupe] int NOT NULL);
+
+-- FK CONSTRAINT capitaine d'équipage
+ALTER TABLE GROUPE add
+constraint FK_CAPITAINE foreign key (id_capitaine)
+references PERSONNAGE(id);
+

@@ -1,0 +1,28 @@
+<div th:fragment="formulaire_equipage">
+    <ul class="flex-outer">
+        <label> Membres Actuel :</label>
+      <li th:each="ty : ${membres}" >
+        <label th:text="${ty.nom + ' ' + ty.particule + ' ' + ty.prenom + ' (' + ty.surnom + ')'}"></label>
+      <a class="bouton" data-th-href="@{/groupes/suppr_perso_equipage(idGroupe=${groupe.id}, idPerso=${ty.id})}">suppression</a>
+    </li>
+
+      <form data-th-action="@{/groupes/miseajour_equipage}"
+            method="post"
+            data-th-object="${groupe}" >
+        <input data-th-field="*{id}" hidden>
+
+      <li>
+          <label> Ajouter un membre :</label>
+        <select id="idPersonnage" data-th-field="*{membreEnPlus}" >
+          <option data-th-each="item : ${listePersonnages}"
+                  data-th-text="${item?.nom + ' ' + item.prenom}"
+                  data-th-value="${item.id}"></option>
+        </select>
+        <br>
+        <button type="submit">Ajouter perso</button>
+      </li>
+
+    </form>
+    </ul>
+
+</div>

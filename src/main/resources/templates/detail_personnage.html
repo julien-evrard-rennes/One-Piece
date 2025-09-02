@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Détail du personnage')}">
+
+<main>
+    <form
+            data-th-action="@{/personnages/miseajour}"
+            method="post"
+            data-th-object="${personnage}"  >
+        <ul class="flex-outer">
+            <li>
+                <label><b>Nom :</b></label>
+                <tr data-th-text="*{nom}" ></tr>
+                    <tr data-th-if="${personnage.particule != '?'}"
+                          data-th-text="*{' ' + particule}" >
+                    </tr>
+            </li>
+            <li>
+                <label><b>Prenom :</b></label>
+                <tr data-th-text="${personnage.prenom}"></tr>
+            </li>
+            <li>
+                <label><b>Surnom :</b></label>
+                <tr data-th-text="${personnage.surnom}"></tr>
+            </li>
+
+            <li>
+                <label><b>Age :</b></label>
+                <tr data-th-text="${ficheAge}"></tr>
+            </li>
+
+            <li>
+                <label><b>Genre :</b></label>
+                <tr data-th-text="${ficheSexe}"></tr>
+            </li>
+
+            <li>
+                <label ><b>Prime :</b></label>
+                <tr data-th-text="${fichePrime}"></tr>
+            </li>
+            <li>
+                <label><b>Groupes :</b></label>
+                <ul>
+                    <a data-th-each="item : ${equipages}"
+                       data-th-href="@{/groupes/details(idGroupe=${item.id})}">
+                        <li data-th-text="${item.nom}"></li>
+                    </a>
+                </ul>
+
+            </li>
+            <li class="bouton">
+                 <td><a data-th-href="@{/personnages/miseajour(idPerso=*{id})}">MODIFIER</a></td>
+                <td><a th:text="Supression" data-th-href="@{/personnages/suppr_personnage(idPerso=${personnage.getId()})}"></a></td>
+            </li>
+        </ul>
+    </form>
+
+</main>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Modifier la fiche de personnage')}">
+
+<main>
+    <h2>Groupes auxquels le personnage appartient</h2>
+    <div th:replace="modifier_attribution_groupe :: formulaire_attribution"></div>
+    <h2>Modifier le personnage</h2>
+    <form
+            data-th-action="@{/personnages/miseajour}"
+            method="post"
+            data-th-object="${personnage}"  >
+        <ul class="flex-outer">
+            <input data-th-field="*{id}" hidden>
+            <li>
+                <label for="idName">Nom :</label>
+                <input id="idName" type=text data-th-field="*{nom}" pattern="[a-zA-Z0-9_:-]{100}"/>
+            </li>
+
+            <li>
+                <label for="idParticule">Particule :</label>
+                <td data-th-text="*{particule}"></td>
+                    <input type="checkbox"  id="idParticule" name="particule" data-th-field="*{particuleCheck}" />
+            </li>
+
+            <li>
+                <label for="idPrenom">Prenom* :</label>
+                <input id="idPrenom" type=text data-th-field="*{prenom}" required pattern="[a-zA-Z0-9_:-]{100}"/>
+            </li>
+            <li>
+                <label for="idSurnom">Surnom :</label>
+                <input id="idSurnom" type=text data-th-field="*{surnom}" pattern="[a-zA-Z0-9_:-]{150}"/>
+            </li>
+
+            <li>
+                <label for="idAge">Age* ("inconnu" = 0) :</label>
+                <input id="idAge" type=number data-th-field="*{age}" required/>
+            </li>
+
+            <li>
+                <label for="idSexe">Genre :</label>
+                <td th:each="ty : ${ListeSexes}" >
+                    <input type="radio" th:field="*{genreCheck}" th:value="${ty}"  />
+                    <label th:text="${ty}">Wireframe</label>
+                </td>
+            </li>
+
+            <li>
+                <label for="idPrime">Prime* ("inconnu" = 0) :</label>
+                <input id="idPrime" type=number data-th-field="*{prime}" required/>
+            </li>
+
+            <!-- <li>
+                <label for="idGroupes">Groupes :</label>
+                <select id="idGroupes" data-th-field="*{groupeList}" Multiple>
+                    <option data-th-each="item : ${listeGroupes}"
+                            data-th-text="${item.nom }"
+                            data-th-value="${item.id}">
+                </select>
+            </li> -->
+            <li> * champs obligatoires</li>
+
+            <li>
+                <button type="submit">Sauvegarder</button>
+                <a class="bouton" th:text="Suppression" data-th-href="@{/personnages/suppr_personnage(idPerso=${personnage.getId()})}"></a>
+            </li>
+
+        </ul>
+    </form>
+
+</main>
+
+</html>

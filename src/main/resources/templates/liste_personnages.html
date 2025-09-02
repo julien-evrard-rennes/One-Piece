@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Liste des personnages')}">
+<main>
+    <h2><div data-th-text="${ 'Il y a ' + persoListSize +' personnages dans cette base de donnée' }"></div></h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Détails</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="item : ${persoLst}">
+            <td data-th-text="${item.nom}"></td>
+            <td data-th-text="${item.prenom}"></td>
+            <td><a data-th-href="@{/personnages/details(idPerso=${item.id})}">Détails</a></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</html>
