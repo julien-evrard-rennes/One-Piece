@@ -12,10 +12,7 @@
         <p class="chiffre_score_definitif" data-th-text="${score}"></p>
     </div>
 
-    <h2 data-th-text="${'Question' + score  + ' '
-    + personnageChoisi.nom + ' '
-    + personnageChoisi.particule + ' '
-    + personnageChoisi.prenom + 'appartient-il a ' + groupeChoisi.nom + ' ?'}">  </h2>
+    <h2 data-th-text="${'Question' + score + ' A quel équipage appartient' + personnageChoisi + ' ?'}">  </h2>
 
     <form action="/jeu/jeu_groupe_reponse" method="post">
         <div class="reponse">

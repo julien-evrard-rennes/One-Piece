@@ -8,26 +8,25 @@
     <h1> Le Jeu de One Piece</h1>
 
     <div class="score">SCORE :
-        <p class="chiffre_score"></p>
-        <p class="chiffre_score_definitif" data-th-text="${score}"></p>
+        <p class="chiffre_score" data-th-text="${'+ ' + score}"></p>
+        <p class="chiffre_score_definitif" data-th-text="${nouveauScore}"></p>
     </div>
 
-    <h2 data-th-text="${'Question' + score  + ' '
-    + personnageChoisi.nom + ' '
-    + personnageChoisi.particule + ' '
-    + personnageChoisi.prenom + 'appartient-il a ' + groupeChoisi.nom + ' ?'}">  </h2>
+    <div class="resultat">
+        <p data-th-text="${resultat}"></p>
+        <br><br>
+    </div>
 
-    <form action="/jeu/jeu_groupe_reponse" method="post">
+    <form action="/jeu/jeu_groupe" method="post">
         <div class="reponse">
             <div>
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>
             <div>
-                <button type="submit">Répondre</button>
+                <button type="submit">Passage au jeu suivant</button>
             </div>
         </div>
-    </form>
 
 </main>
 

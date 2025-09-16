@@ -3,6 +3,7 @@ package fr.eni.onepiecev4.ihm;
 import fr.eni.onepiecev4.bll.GroupeService;
 import fr.eni.onepiecev4.bll.MethodesJeu;
 import fr.eni.onepiecev4.bll.PersonnageService;
+import fr.eni.onepiecev4.bo.Groupe;
 import fr.eni.onepiecev4.bo.Personnage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,7 +84,6 @@ public class JeuController {
         if (persoChoisi.getSurnom() != null) {
             model.addAttribute("questionSuivante", "Surnom");
             String resultatSurnom [] = methodesJeu.questionSurnom(persoChoisi);
-            model.addAttribute("triche", resultatSurnom[0]);
             model.addAttribute("proposition1", resultatSurnom[1]);
             model.addAttribute("proposition2", resultatSurnom[2]);
             model.addAttribute("proposition3", resultatSurnom[3]);
@@ -141,6 +141,10 @@ public class JeuController {
         Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
         model.addAttribute("personnageChoisi", persoChoisi);
         model.addAttribute("score", score);
+        Groupe groupeChoisi = methodesJeu.tirageGroupe();
+        System.out.println(groupeChoisi);
+        model.addAttribute("groupeChoisi", groupeChoisi);
+
 
 
 
