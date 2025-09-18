@@ -6,9 +6,6 @@ import fr.eni.onepiecev4.dal.PersonnageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -233,6 +230,17 @@ public class PersonnageServiceImpl implements PersonnageService {
     @Override
     public List<Groupe> personnageAfficheListEquipage(Personnage personnage) {
         return personnageDAO.consulterListGroupes(personnage);
+    }
+
+    @Override
+    public boolean verifierAppartenance(Personnage personnage, Groupe groupe){
+        List groupes = personnageDAO.consulterListGroupes(personnage);
+        if (groupes.contains(groupe)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 

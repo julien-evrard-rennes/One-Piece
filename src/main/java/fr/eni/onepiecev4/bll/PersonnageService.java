@@ -31,4 +31,6 @@ public interface PersonnageService {
     List<String> personnageSexeList ();
 
     List<Personnage> consulterListePersonnagesAvecPseudo();
+
+    boolean verifierAppartenance(Personnage personnage, Groupe groupe);
 }

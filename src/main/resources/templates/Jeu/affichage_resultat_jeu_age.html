@@ -13,15 +13,15 @@
     </div>
 
     <div class="resultat">
-        <p data-th-text="${reponseAffiche}"></p>
+        <p data-th-text="${resultat}"></p>
     </div>
 
-    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : '
+    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : Quel est la valeur de la prime de '
     + personnageChoisi.nom + ' '
     + personnageChoisi.particule + ' '
     + personnageChoisi.prenom +
      ' a t-'+ pronom +
-     ' le même âge que ' +
+     ' par rapport à celle de  ' +
      secondPerso.nom + ' '
     + secondPerso.particule + ' '
     + secondPerso.prenom + ' ?'}">  </h2>
@@ -30,16 +30,15 @@
     <form action="/jeu/jeu_age_reponse" method="post">
         <div class="reponse">
             <div>
-
                 <input id="numerodequestion" name="numerodequestion" type="number" th:value="${numeroDeQuestion + 1}" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
                 <input id="idPerso2" name="idPerso2" type=number th:value="${secondPerso.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>
             <div>
-                <button id="oui" name="reponse" value="oui" type="submit">OUI</button>
-                <button id="+vieux" name= "reponse" value="+vieux" type="submit"  th:text="${reponsePlusVieux}"></button>
-                <button id="+jeune" name= "reponse" value="+jeune" type="submit"  th:text="${reponsePlusJeune}"></button>
+                <button id="egal" name="reponse" value="egal" type="submit">ÉGALE</button>
+                <button id="+gros" name= "reponse" value="+gros" type="submit">PLUS HAUTE</button>
+                <button id="+bas" name= "reponse" value="+bas" type="submit">PLUS BASSE</button>
             </div>
         </div>
     </form>

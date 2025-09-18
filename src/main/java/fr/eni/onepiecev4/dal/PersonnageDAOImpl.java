@@ -2,8 +2,6 @@ package fr.eni.onepiecev4.dal;
 
 import fr.eni.onepiecev4.bo.Groupe;
 import fr.eni.onepiecev4.bo.Personnage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Repository
@@ -135,6 +134,7 @@ public class PersonnageDAOImpl implements PersonnageDAO {
         }
 
     }
+
 
     class GroupeMapper implements RowMapper<Groupe> {
         @Override

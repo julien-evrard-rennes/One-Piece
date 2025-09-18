@@ -28,6 +28,12 @@ public interface MethodesJeu {
     String[] questionSurnom(Personnage perso);
 
     String reponseSurnom(String reponsePseudo, Personnage personnage);
+
+    String reponseEquipage(String reponse, Personnage persoChoisi, Groupe groupeChoisi);
+
+    String AffichageReponse(String resultat, String reponse, Personnage persoChoisi, Groupe groupeChoisi);
+
+    String reponseAge(String reponse, Personnage persoPrincipal, Personnage persoSecondaire);
 }
 
 

@@ -100,9 +100,9 @@ public class JeuController {
     @PostMapping("/question_pseudo")
     public String reponsePseudo(@RequestParam
                                     String reponsePseudo,
-                                  long idPerso,
-                                  Integer score,
-                                  Model model) {
+                                long idPerso,
+                                Integer score,
+                                Model model) {
 
         Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
         model.addAttribute("personnageChoisi", persoChoisi);
@@ -136,19 +136,91 @@ public class JeuController {
     public String questionGroupe(@RequestParam
                                 long idPerso,
                                 Integer score,
+                                int numerodequestion,
                                 Model model) {
 
         Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
         model.addAttribute("personnageChoisi", persoChoisi);
+
+        if (persoChoisi.getSexe() =='F') {
+            model.addAttribute("pronom", "elle");
+        }
+        else {
+            model.addAttribute("pronom", "il");
+        }
+
         model.addAttribute("score", score);
         Groupe groupeChoisi = methodesJeu.tirageGroupe();
-        System.out.println(groupeChoisi);
         model.addAttribute("groupeChoisi", groupeChoisi);
 
-
-
-
         return "/jeu/affichage_jeu_groupe";
+    }
+
+    @PostMapping("/jeu_groupe_reponse")
+    public String reponseGroupe(@RequestParam
+                                long idPerso,
+                                Integer score,
+                                int numerodequestion,
+                                int idGroupe,
+                                String reponse,
+                                Model model) {
+        Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
+        Groupe groupeChoisi = groupeService.consulterGroupeParId(idGroupe);
+
+        /* On calcule si c'est gagné ou perdu */
+        String resultat = methodesJeu.reponseEquipage(reponse, persoChoisi, groupeChoisi);
+
+        /* On va créer dynamiquement une réponse qui va s'afficher */
+        String reponseAffiche = methodesJeu.AffichageReponse(resultat, reponse, persoChoisi, groupeChoisi);
+        model.addAttribute("reponseAffiche", reponseAffiche);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
+        model.addAttribute("personnageChoisi", persoChoisi);
+
+        Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
+        model.addAttribute("score", pointsGagnes);
+        model.addAttribute("nouveauScore", score + pointsGagnes);
+
+        Personnage secondPerso = methodesJeu.tiragePersonnage();
+        model.addAttribute("secondPerso", secondPerso);
+
+        if (persoChoisi.getSexe() =='F') {
+            model.addAttribute("pronom", "elle");
+            model.addAttribute("reponsePlusVieux", "elle est plus vieille");
+            model.addAttribute("reponsePlusJeune", "elle est plus jeune");
+        }
+        else {
+            model.addAttribute("pronom", "il");
+            model.addAttribute("reponsePlusVieux", "il est plus vieux");
+            model.addAttribute("reponsePlusJeune", "il est plus jeune");
+        }
+
+        return "/jeu/affichage_resultat_jeu_groupe";
+    }
+
+    @PostMapping("/jeu_age_reponse")
+    public String reponseAge(@RequestParam
+                                long idPerso,
+                                Integer score,
+                                int numerodequestion,
+                                long idPerso2,
+                                String reponse,
+                                Model model) {
+        Personnage persoPrincipal = personnageService.consulterPersonnageParId(idPerso);
+        Personnage persoSecondaire = personnageService.consulterPersonnageParId(idPerso2);
+
+        /* On calcule si c'est gagné ou perdu */
+        String resultat = methodesJeu.reponseAge(reponse, persoPrincipal, persoSecondaire);
+        model.addAttribute("resultat", resultat);
+
+        model.addAttribute("personnageChoisi", persoPrincipal);
+        model.addAttribute("secondPerso", persoSecondaire);
+
+        Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
+        model.addAttribute("score", pointsGagnes);
+        model.addAttribute("nouveauScore", score + pointsGagnes);
+
+        return "/jeu/affichage_resultat_jeu_age";
     }
 
 

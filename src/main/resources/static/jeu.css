@@ -126,6 +126,10 @@ p.chiffre_score_definitif {
     margin-left:-15px;
 }
 
+p.chiffre_score_definitif2 {
+    margin-left:15px;
+}
+
 input#idName {
     text-align: center;
     margin: 10px;

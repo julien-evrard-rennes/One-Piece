@@ -12,12 +12,14 @@ public class MethodesJeuImpl implements MethodesJeu {
 
     public static Random r = new Random();
     public static final char VIDE = ' ';
+    private final PersonnageServiceImpl personnageServiceImpl;
     public GroupeService groupeService;
     public PersonnageService personnageService;
 
-    public MethodesJeuImpl(GroupeService groupeService, PersonnageService personnageService) {
+    public MethodesJeuImpl(GroupeService groupeService, PersonnageService personnageService, PersonnageServiceImpl personnageServiceImpl) {
         this.groupeService = groupeService;
         this.personnageService = personnageService;
+        this.personnageServiceImpl = personnageServiceImpl;
     }
 
     /**
@@ -346,82 +348,97 @@ public class MethodesJeuImpl implements MethodesJeu {
         return reponse;
     }
 
+    /**
+     * Va chercher dans la liste si le groupe et le perso concordent et attribue une réponse en fonction de la réponse du joueur
+     * @param reponse
+     * @param persoChoisi
+     * @param groupeChoisi
+     * @return Gagné ou Perdu
+     */
 
-    public static int questionAlignement(boolean confirmation, int prop2, int score, String groupePirate2, String groupePirate) {
-        if (prop2 == 1) {
-            if (confirmation == true) {
-                System.out.println("GAGNÉ ! - Ce perso a fait effectivement partie de " + groupePirate2);
-                System.out.println("+10 points!");
-                score = (score + 10);
-            } else
-                System.err.println("PERDU ! Ce perso fait partie de " + groupePirate);
+    @Override
+    public String reponseEquipage(String reponse, Personnage persoChoisi, Groupe groupeChoisi) {
+
+        boolean appartenance = personnageService.verifierAppartenance(persoChoisi, groupeChoisi);
+
+        if (reponse.equals("oui") && appartenance == true ) {
+            return "Gagne";
         }
-        if (prop2 == 2) {
-            if (confirmation == true)
-                System.err.println("PERDU - Ce perso a fait vraiment partie de " + groupePirate2);
-            else {
-                System.out.println("GAGNÉ  - Ce perso fait partie notamment de " + groupePirate);
-                System.out.println("+10 points!");
-                score = (score + 10);
-            }
+        if (reponse.equals("oui") && appartenance == false ) {
+            return "Perdu";
         }
-        return score;
+        if (reponse.equals("non") && appartenance == false ) {
+            return "Gagne";
+        }
+        else {
+            return "Perdu";
+        }
     }
 
+    /**
+     *  Génére une réponse à afficher selon la réponse du joueur, l'appartenance du personnage au groupe, et le nom du personnage et du groupe choisi
+     * @param resultat
+     * @param reponse
+     * @param persoChoisi
+     * @param groupeChoisi
+     * @return
+     */
+    @Override
+    public String AffichageReponse(String resultat, String reponse, Personnage persoChoisi, Groupe groupeChoisi) {
+        String premierePartie = "";
+        String deuxiemePartie = "";
+        if (resultat.equals("Gagne")){
+            String[] compliment = { "Effectivement", "C'est vrai", "Oui" , "Tout à fait" , "Bravo" };
+            int numChoisi = (r.nextInt(compliment.length));
+            premierePartie = compliment[numChoisi];
+        }
+        else if (resultat.equals("Perdu")){
+            String[] deception = { "Malheureusement", "Hélas", "C'est faux", "Non" , "Perdu" };
+            int numChoisi = (r.nextInt(deception.length));
+            premierePartie = deception[numChoisi];
+        }
 
-    public static int reponseAge(int prop3, int age, int age2, String perso, String perso2, int score) {
-        if (prop3 == 1) {
-            if ((age - age2) < 0) {
-                System.out.println("GAGNÉ : " + perso + " a " + age + " ans, tandis que " + perso2 + " a " + age2 + " ans.");
-                System.out.println("+10 points!");
-                score = (score + 10);
-            }
-            ;
-            if ((age - age2) > 0) {
-                System.err.println("PERDU : " + perso + " a " + age + " ans, tandis que " + perso2 + " a " + age2 + " ans.");
-            }
-            ;
-            if ((age - age2) == 0) {
-                System.err.println("PERDU : Ces deux personnages ont tous les deux le même âge");
-            }
-            ;
+        if ((reponse.equals("oui") && resultat.equals("Gagne"))||(reponse.equals("non") && resultat.equals("Perdu"))) {
+            deuxiemePartie = "a bien fait partie de ";
         }
-        if (prop3 == 2) {
-            if ((age - age2) < 0) {
-                System.err.println("PERDU : " + perso + " a " + age + " ans, tandis que " + perso2 + " a " + age2 + " ans.");
-            }
-            ;
-            if ((age - age2) > 0) {
-                System.out.println("GAGNÉ : " + perso + " a " + age + " ans, tandis que " + perso2 + " a " + age2 + " ans.");
-                System.out.println("+10 points!");
-                score = (score + 10);
-            }
-            ;
-            if ((age - age2) == 0) {
-                System.err.println("PERDU : Ces deux personnages ont tous les deux le même âge");
-            }
-            ;
+        else if ((reponse.equals("oui") && resultat.equals("Perdu"))||(reponse.equals("non") && resultat.equals("Gagne"))) {
+            deuxiemePartie = "n'a jamais fait partie de ";
         }
-        ;
-        if (prop3 == 3) {
-            if ((age - age2) < 0) {
-                System.err.println("PERDU : " + perso + " a " + age + " ans, tandis que " + perso2 + " a " + age2 + " ans.");
-            }
-            ;
-            if ((age - age2) > 0) {
-                System.err.println("PERDU : " + perso + " a " + age + " ans, tandis que " + perso2 + " a " + age2 + " ans.");
-            }
-            ;
-            if ((age - age2) == 0) {
-                System.out.println("GAGNÉ : Ces deux personnages ont effectivement tous les deux le même âge");
-                System.out.println("+10 points!");
-                score = (score + 10);
-            }
-            ;
-        }
-        ;
 
-        return score;
+        return premierePartie + ", " +
+                 persoChoisi.getNom() + ' '
+                + persoChoisi.getParticule() + ' '
+                + persoChoisi.getPrenom() + ' '
+                + persoChoisi.getNom() + ' '
+                + deuxiemePartie
+                + groupeChoisi.getNom()
+                + '.';
+    }
+
+    /**
+     * Methode permettant de comparer l'age de deux personnages et de les comparer à la réponse donnée
+     * @param reponse
+     * @param persoPrincipal
+     * @param persoSecondaire
+     * @return Gagné ou Perdu
+     */
+
+    @Override
+    public String reponseAge(String reponse, Personnage persoPrincipal, Personnage persoSecondaire) {
+
+        if (reponse.equals("oui") && persoPrincipal.getAge() == persoSecondaire.getAge() ) {
+            return "Gagne";
+        }
+        else if (reponse.equals("+vieux") && persoPrincipal.getAge() > persoSecondaire.getAge() ) {
+            return "Gagne";
+        }
+        else if (reponse.equals("+jeune") && persoPrincipal.getAge() < persoSecondaire.getAge() ) {
+            return "Gagne";
+        }
+        else {
+            return "Perdu";
+        }
+
     }
 
 

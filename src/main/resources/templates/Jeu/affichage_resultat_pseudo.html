@@ -20,6 +20,7 @@
     <form action="/jeu/jeu_groupe" method="post">
         <div class="reponse">
             <div>
+                <input id="numerodequestion" name="numerodequestion" type="number" value="3" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>
