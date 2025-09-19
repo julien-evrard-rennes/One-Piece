@@ -17,6 +17,10 @@ public interface MethodesJeu {
 
     Personnage tiragePersonnageAvecPseudo();
 
+    Personnage tiragePersonnageAvecAge();
+
+    Personnage tiragePersonnageAvecPrime();
+
     char[] nomemclature(String nomusuel);
 
     String jeuDesLettres(String reponseNom, Personnage personnage);
@@ -31,9 +35,11 @@ public interface MethodesJeu {
 
     String reponseEquipage(String reponse, Personnage persoChoisi, Groupe groupeChoisi);
 
-    String AffichageReponse(String resultat, String reponse, Personnage persoChoisi, Groupe groupeChoisi);
+    String AffichageReponseJeuEquipage(String resultat, String reponse, Personnage persoChoisi, Groupe groupeChoisi);
 
     String reponseAge(String reponse, Personnage persoPrincipal, Personnage persoSecondaire);
+
+    String AffichageReponseJeuAge(String resultat, Personnage persoPrincipal, Personnage persoSecondaire);
 }
 
 

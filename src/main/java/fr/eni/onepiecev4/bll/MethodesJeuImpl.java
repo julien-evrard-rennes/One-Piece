@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MethodesJeuImpl implements MethodesJeu {
 
-    public static Random r = new Random();
-    public static final char VIDE = ' ';
+    private static Random r = new Random();
+    private static final char VIDE = ' ';
     private final PersonnageServiceImpl personnageServiceImpl;
-    public GroupeService groupeService;
-    public PersonnageService personnageService;
+    private GroupeService groupeService;
+    private PersonnageService personnageService;
+    private String[] compliment = { "Effectivement", "C'est vrai", "Oui" , "Tout à fait" , "Bravo" };
+    private String[] deception = { "Malheureusement", "Hélas", "C'est faux", "Non" , "Perdu" };
 
     public MethodesJeuImpl(GroupeService groupeService, PersonnageService personnageService, PersonnageServiceImpl personnageServiceImpl) {
         this.groupeService = groupeService;
@@ -61,6 +63,22 @@ public class MethodesJeuImpl implements MethodesJeu {
     @Override
     public Personnage tiragePersonnageAvecPseudo() {
         List<Personnage> list = personnageService.consulterListePersonnagesAvecPseudo();
+        int numChoisi = (r.nextInt(list.size()));
+        Personnage personnageChoisi = list.get(numChoisi);
+        return personnageChoisi;
+    }
+
+    @Override
+    public Personnage tiragePersonnageAvecAge() {
+        List<Personnage> list = personnageService.consulterListePersonnagesAvecAge();
+        int numChoisi = (r.nextInt(list.size()));
+        Personnage personnageChoisi = list.get(numChoisi);
+        return personnageChoisi;
+    }
+
+    @Override
+    public Personnage tiragePersonnageAvecPrime() {
+        List<Personnage> list = personnageService.consulterListePersonnagesAvecPrime();
         int numChoisi = (r.nextInt(list.size()));
         Personnage personnageChoisi = list.get(numChoisi);
         return personnageChoisi;
@@ -384,16 +402,14 @@ public class MethodesJeuImpl implements MethodesJeu {
      * @return
      */
     @Override
-    public String AffichageReponse(String resultat, String reponse, Personnage persoChoisi, Groupe groupeChoisi) {
+    public String AffichageReponseJeuEquipage(String resultat, String reponse, Personnage persoChoisi, Groupe groupeChoisi) {
         String premierePartie = "";
         String deuxiemePartie = "";
         if (resultat.equals("Gagne")){
-            String[] compliment = { "Effectivement", "C'est vrai", "Oui" , "Tout à fait" , "Bravo" };
             int numChoisi = (r.nextInt(compliment.length));
             premierePartie = compliment[numChoisi];
         }
         else if (resultat.equals("Perdu")){
-            String[] deception = { "Malheureusement", "Hélas", "C'est faux", "Non" , "Perdu" };
             int numChoisi = (r.nextInt(deception.length));
             premierePartie = deception[numChoisi];
         }
@@ -409,7 +425,6 @@ public class MethodesJeuImpl implements MethodesJeu {
                  persoChoisi.getNom() + ' '
                 + persoChoisi.getParticule() + ' '
                 + persoChoisi.getPrenom() + ' '
-                + persoChoisi.getNom() + ' '
                 + deuxiemePartie
                 + groupeChoisi.getNom()
                 + '.';
@@ -441,20 +456,55 @@ public class MethodesJeuImpl implements MethodesJeu {
 
     }
 
+    @Override
+    public String AffichageReponseJeuAge(String resultat, Personnage persoPrincipal, Personnage persoSecondaire) {
+        String premierePartie = "";
+        String deuxiemePartie = "";
+        if (resultat.equals("Gagne")){
+            int numChoisi = (r.nextInt(compliment.length));
+            premierePartie = compliment[numChoisi];
+        }
+        else if (resultat.equals("Perdu")){
+            int numChoisi = (r.nextInt(deception.length));
+            premierePartie = deception[numChoisi];
+        }
 
-    /**
-     * Méthode permettant de tirer un des tableau au hasard
-     *
-     * @return un numéro de tableau nommé numTableau.
-     */
+        if (persoPrincipal.getAge() == persoSecondaire.getAge() ) {
+            return premierePartie + ' ' +
+                    persoPrincipal.getNom() + ' '
+                    + persoPrincipal.getParticule() + ' '
+                    + persoPrincipal.getPrenom() + " et "
+                    + persoSecondaire.getNom() + ' '
+                    + persoSecondaire.getParticule() + ' '
+                    + persoSecondaire.getPrenom() + " ont le même âge ("
+                    + persoPrincipal.getAge() + " ans.)"
+                    ;
+        } else {
+            if (persoPrincipal.getAge() > persoSecondaire.getAge()) {
+                if (persoPrincipal.getSexe() == 'F') {
+                    deuxiemePartie = " est plus vieille";
+                } else {
+                    deuxiemePartie = "est plus vieux ";
+                }
+            } else if (persoPrincipal.getAge() < persoSecondaire.getAge()) {
+                    deuxiemePartie = " est plus jeune ";
+            }
 
-    static void prochainQuizz(String prop3) {
-        if (prop3 != null)
-            System.out.println("");
-        System.out.println("---------------------");
+        }
+            return premierePartie + ' ' +
+                    persoPrincipal.getNom() + ' '
+                    + persoPrincipal.getParticule() + ' '
+                    + persoPrincipal.getPrenom() +
+                    deuxiemePartie + "(" +
+                    persoPrincipal.getAge() + " ans) que " +
+                    persoSecondaire.getNom() + ' '
+                    + persoSecondaire.getParticule() + ' '
+                    + persoSecondaire.getPrenom() + " (" +
+                    persoSecondaire.getAge() + " ans)";
+        }
     }
 
-	/*
+    /*
 
 	public static Personnage questionPrime(Personnage perso) {
 
@@ -526,4 +576,3 @@ public class MethodesJeuImpl implements MethodesJeu {
 */
 
 
-}	

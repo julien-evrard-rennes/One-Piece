@@ -21,4 +21,8 @@ public interface PersonnageDAO {
     List<Groupe> consulterListGroupes(Personnage personnage);
 
     List<Personnage> consulterListPersonnagesAvecPseudo();
+
+    List<Personnage> consulterListPersonnagesAvecPrime();
+
+    List<Personnage> consulterListPersonnagesAvecAge();
 }

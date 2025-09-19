@@ -21,6 +21,10 @@ public class PersonnageDAOImpl implements PersonnageDAO {
 
     private final String FIND_ALL_WITH_USERNAME = "SELECT * FROM PERSONNAGE WHERE SURNOM != ''";
 
+    private final String FIND_ALL_WITH_AGE = "SELECT * FROM PERSONNAGE WHERE AGE >0";
+
+    private final String FIND_ALL_WITH_PRIME = "SELECT * FROM PERSONNAGE WHERE PRIME >0";
+
     private final String FIND_BY_NUMBER = "SELECT * FROM PERSONNAGE WHERE id = :id";
 
     private final String INSERT = "INSERT INTO PERSONNAGE(prenom, nom, surnom, particule, sexe, age, prime) " +
@@ -48,6 +52,18 @@ public class PersonnageDAOImpl implements PersonnageDAO {
     public List<Personnage> consulterListPersonnagesAvecPseudo() {
         MapSqlParameterSource params = new MapSqlParameterSource();
         return jdbcTemplate.query(FIND_ALL_WITH_USERNAME, params, new PersonnageMapper());
+    }
+
+    @Override
+    public List<Personnage> consulterListPersonnagesAvecPrime() {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        return jdbcTemplate.query(FIND_ALL_WITH_PRIME, params, new PersonnageMapper());
+    }
+
+    @Override
+    public List<Personnage> consulterListPersonnagesAvecAge() {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        return jdbcTemplate.query(FIND_ALL_WITH_AGE, params, new PersonnageMapper());
     }
 
     @Override

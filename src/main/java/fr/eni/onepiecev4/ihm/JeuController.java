@@ -172,16 +172,18 @@ public class JeuController {
         String resultat = methodesJeu.reponseEquipage(reponse, persoChoisi, groupeChoisi);
 
         /* On va créer dynamiquement une réponse qui va s'afficher */
-        String reponseAffiche = methodesJeu.AffichageReponse(resultat, reponse, persoChoisi, groupeChoisi);
+        String reponseAffiche = methodesJeu.AffichageReponseJeuEquipage(resultat, reponse, persoChoisi, groupeChoisi);
         model.addAttribute("reponseAffiche", reponseAffiche);
-        model.addAttribute("numeroDeQuestion", numerodequestion);
-        model.addAttribute("personnageChoisi", persoChoisi);
+
+        /* On relance le jeu suivant */
 
         Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
         model.addAttribute("score", pointsGagnes);
         model.addAttribute("nouveauScore", score + pointsGagnes);
 
-        Personnage secondPerso = methodesJeu.tiragePersonnage();
+        model.addAttribute("numeroDeQuestion", numerodequestion);
+        model.addAttribute("personnageChoisi", persoChoisi);
+        Personnage secondPerso = methodesJeu.tiragePersonnageAvecAge();
         model.addAttribute("secondPerso", secondPerso);
 
         if (persoChoisi.getSexe() =='F') {
@@ -212,9 +214,22 @@ public class JeuController {
         /* On calcule si c'est gagné ou perdu */
         String resultat = methodesJeu.reponseAge(reponse, persoPrincipal, persoSecondaire);
         model.addAttribute("resultat", resultat);
+        System.out.println(resultat);
+
+        /* On va créer dynamiquement une réponse qui va s'afficher */
+        String reponseAffiche = methodesJeu.AffichageReponseJeuAge(resultat, persoPrincipal, persoSecondaire);
+        System.out.println(reponseAffiche);
+        model.addAttribute("reponseAffiche", reponseAffiche);
+
+        /* On lance et on affiche le jeu suivant */
+
+        model.addAttribute("numeroDeQuestion", numerodequestion);
+
+        Personnage persoTertiaire = methodesJeu.tiragePersonnageAvecPrime();
 
         model.addAttribute("personnageChoisi", persoPrincipal);
         model.addAttribute("secondPerso", persoSecondaire);
+        model.addAttribute("troisiemePerso", persoSecondaire);
 
         Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
         model.addAttribute("score", pointsGagnes);

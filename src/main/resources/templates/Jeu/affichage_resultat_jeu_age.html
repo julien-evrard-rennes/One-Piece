@@ -2,7 +2,7 @@
 
 
 <html data-th-replace="~{layout :: frag_layout(content= ~{::main},
-                                                title='Réponse jeu pseudo')}">
+                                                title='Réponse jeu age')}">
 
 <main>
     <h1> Le Jeu de One Piece</h1>
@@ -13,26 +13,25 @@
     </div>
 
     <div class="resultat">
-        <p data-th-text="${resultat}"></p>
+        <p data-th-text="${reponseAffiche}"></p>
     </div>
 
     <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : Quel est la valeur de la prime de '
     + personnageChoisi.nom + ' '
     + personnageChoisi.particule + ' '
     + personnageChoisi.prenom +
-     ' a t-'+ pronom +
      ' par rapport à celle de  ' +
-     secondPerso.nom + ' '
-    + secondPerso.particule + ' '
-    + secondPerso.prenom + ' ?'}">  </h2>
+     troisiemePerso.nom + ' '
+    + troisiemePerso.particule + ' '
+    + troisiemePerso.prenom + ' ?'}">  </h2>
 
 
-    <form action="/jeu/jeu_age_reponse" method="post">
+    <form action="/jeu/jeu_prime_reponse" method="post">
         <div class="reponse">
             <div>
                 <input id="numerodequestion" name="numerodequestion" type="number" th:value="${numeroDeQuestion + 1}" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
-                <input id="idPerso2" name="idPerso2" type=number th:value="${secondPerso.id}" hidden />
+                <input id="idPerso2" name="idPerso2" type=number th:value="${troisiemePerso.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>
             <div>

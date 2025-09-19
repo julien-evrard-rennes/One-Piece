@@ -33,4 +33,8 @@ public interface PersonnageService {
     List<Personnage> consulterListePersonnagesAvecPseudo();
 
     boolean verifierAppartenance(Personnage personnage, Groupe groupe);
+
+    List<Personnage> consulterListePersonnagesAvecAge();
+
+    List<Personnage> consulterListePersonnagesAvecPrime();
 }
