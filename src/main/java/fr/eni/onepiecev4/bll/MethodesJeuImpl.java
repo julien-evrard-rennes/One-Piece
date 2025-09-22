@@ -24,6 +24,31 @@ public class MethodesJeuImpl implements MethodesJeu {
         this.personnageServiceImpl = personnageServiceImpl;
     }
 
+
+    /**
+     * Methode permettant d'afficher le nom complet d'un personnage et ses variations
+     * (avec une particule ou non, avec ou sans nom de famille)
+     * @param personnage
+     * @return nom complet
+     */
+
+    @Override
+    public String nomComplet(Personnage personnage) {
+        String nom = "";
+        String particule = "";
+        String prenom ="";
+        if (personnage.getNom() != null && personnage.getNom().length() > 1) {
+            nom = personnage.getNom();
+        }
+        if (personnage.getParticule() !=' ' ){
+            particule = (personnage.getParticule() +".");
+        }
+        if (personnage.getPrenom() != null && personnage.getPrenom().length() > 1) {
+            prenom = personnage.getPrenom();
+        }
+        return nom + " " + particule + " " + prenom;
+    }
+
     /**
      * Méthode permettant de tirer un groupe au hasard
      *
@@ -415,16 +440,13 @@ public class MethodesJeuImpl implements MethodesJeu {
         }
 
         if ((reponse.equals("oui") && resultat.equals("Gagne"))||(reponse.equals("non") && resultat.equals("Perdu"))) {
-            deuxiemePartie = "a bien fait partie de ";
+            deuxiemePartie = " a bien fait partie de ";
         }
         else if ((reponse.equals("oui") && resultat.equals("Perdu"))||(reponse.equals("non") && resultat.equals("Gagne"))) {
-            deuxiemePartie = "n'a jamais fait partie de ";
+            deuxiemePartie = " n'a jamais fait partie de ";
         }
 
-        return premierePartie + ", " +
-                 persoChoisi.getNom() + ' '
-                + persoChoisi.getParticule() + ' '
-                + persoChoisi.getPrenom() + ' '
+        return premierePartie + ", " + nomComplet(persoChoisi)
                 + deuxiemePartie
                 + groupeChoisi.getNom()
                 + '.';
@@ -456,6 +478,14 @@ public class MethodesJeuImpl implements MethodesJeu {
 
     }
 
+    /**
+     * Methode permettant de générer à la carte une réponse pour le jeu de l'age
+     * @param resultat
+     * @param persoPrincipal
+     * @param persoSecondaire
+     * @return
+     */
+
     @Override
     public String AffichageReponseJeuAge(String resultat, Personnage persoPrincipal, Personnage persoSecondaire) {
         String premierePartie = "";
@@ -470,13 +500,9 @@ public class MethodesJeuImpl implements MethodesJeu {
         }
 
         if (persoPrincipal.getAge() == persoSecondaire.getAge() ) {
-            return premierePartie + ' ' +
-                    persoPrincipal.getNom() + ' '
-                    + persoPrincipal.getParticule() + ' '
-                    + persoPrincipal.getPrenom() + " et "
-                    + persoSecondaire.getNom() + ' '
-                    + persoSecondaire.getParticule() + ' '
-                    + persoSecondaire.getPrenom() + " ont le même âge ("
+            return premierePartie + ", " + nomComplet(persoPrincipal) +
+                    " et "
+                    + nomComplet(persoSecondaire) + " ont le même âge ("
                     + persoPrincipal.getAge() + " ans.)"
                     ;
         } else {
@@ -491,88 +517,71 @@ public class MethodesJeuImpl implements MethodesJeu {
             }
 
         }
-            return premierePartie + ' ' +
-                    persoPrincipal.getNom() + ' '
-                    + persoPrincipal.getParticule() + ' '
-                    + persoPrincipal.getPrenom() +
-                    deuxiemePartie + "(" +
+            return premierePartie + ", " +
+                    nomComplet(persoPrincipal) +
+                    deuxiemePartie + " (" +
                     persoPrincipal.getAge() + " ans) que " +
-                    persoSecondaire.getNom() + ' '
-                    + persoSecondaire.getParticule() + ' '
-                    + persoSecondaire.getPrenom() + " (" +
+                    nomComplet(persoSecondaire) + " (" +
                     persoSecondaire.getAge() + " ans)";
+        }
+
+    @Override
+    public String reponsePrime(String reponse, Personnage persoPrincipal, Personnage persoSecondaire) {
+
+        if (reponse.equals("egal") && persoPrincipal.getPrime() == persoSecondaire.getPrime() ) {
+            return "Gagne";
+        }
+        else if (reponse.equals("+gros") && persoPrincipal.getPrime() > persoSecondaire.getPrime() ) {
+            return "Gagne";
+        }
+        else if (reponse.equals("+bas") && persoPrincipal.getPrime() < persoSecondaire.getPrime() ) {
+            return "Gagne";
+        }
+        else {
+            return "Perdu";
         }
     }
 
-    /*
+    @Override
+    public String AffichageReponseJeuPrime(String resultat, Personnage persoPrincipal, Personnage persoSecondaire) {
+        String premierePartie = "";
+        String deuxiemePartie = "";
+        if (resultat.equals("Gagne")) {
+            int numChoisi = (r.nextInt(compliment.length));
+            premierePartie = compliment[numChoisi];
+        } else if (resultat.equals("Perdu")) {
+            int numChoisi = (r.nextInt(deception.length));
+            premierePartie = deception[numChoisi];
+        }
 
-	public static Personnage questionPrime(Personnage perso) {
+        if (persoPrincipal.getPrime() == 0 ) {
+            return premierePartie + ", " + nomComplet(persoPrincipal) +
+                    " n'ayant pas de prime connue a ce jour, les "
+                    + personnageService.personnagePrimeAffiche(persoSecondaire) + " de la prime de "
+                    + nomComplet(persoSecondaire) + " sont forcément plus élevés.";
+        }
 
-			Groupe groupePirate = tirageGroupe();
-			Personnage perso2 = tirerPersoAleatoirement(groupePirate);
-			
-			if (perso2.prime == 0){Groupe groupePirate4 = MethodesJeu.tirageGroupe();
-				perso2 = MethodesJeu.tirerPersoAleatoirement(groupePirate4);
-				}
-			
-			System.out.println("Entre " + perso.nomusuel + " et " + perso2.nom + " " + perso2.prenom+ " lequel a une plus grosse prime ?");
-			System.out.println(perso.nomusuel + "(tapez 1) ");
-			System.out.println(perso2.nom + " " + perso2.prenom + "(tapez 2)");
-			System.out.println("Ces deux persos ont la même prime (tapez 3) ");
-
-			return perso2;
-			}
-
-	public static int reponsePrime(Personnage perso, Personnage perso3, int score, int prop6) {
-		long  prime1 = perso.prime; long prime2 = perso3.prime;
-		String montantPrime1 ="montant inconnu"; 
-		String montantPrime2 ="montant inconnu";
-		if(prime1>1000000) montantPrime1 = Long.toString(prime1/1000000) + " Millions";
-		if(prime1>1000000000) montantPrime1 = Long.toString(prime1/1000000000) + " Milliards";
-		if(prime2>1000000) montantPrime2 = Long.toString(prime2/1000000) + " Millions";
-		if(prime2>1000000000) montantPrime2 = Long.toString(prime2/1000000000) + " Milliards";
-		
-		if (prop6 == 1){
-			if ((prime1-prime2)<0){
-				System.err.println("PERDU : la prime de " + perso.nomusuel + " s'élève à " + montantPrime1 + " de berrys tandis que celle de " + perso3.nomusuel + " est a " +  montantPrime2 + " de berry");
-				};
-			if ((prime1-prime2)>0){System.out.println("GAGNÉ : la prime de " + perso.nomusuel + " s'élève à " + montantPrime1 + " de berrys tandis que celle de " + perso3.nomusuel + " est a " +  montantPrime2 + " de berry");
-				System.out.println("+10 points!");
-				score = (score + 10);
-				};
-			if ((prime1-prime2)==0){
-				System.err.println("PERDU : Ces deux personnages ont tous les deux la même prime");
-				};
-			}
-		if (prop6 == 2){
-				if ((prime1-prime2)<0){System.out.println("GAGNÉ : la prime de " + perso.nomusuel + " s'élève à " + montantPrime1 + " de berrys tandis que celle de " + perso3.nomusuel + " est a " +  montantPrime2 + " de berry");
-				System.out.println("+10 points!");
-				score = (score + 10);
-				};
-				if ((prime1-prime2)>0){
-				System.err.println("PERDU : la prime de " + perso.nomusuel + " s'élève à " + montantPrime1 + " de berrys tandis que celle de " + perso3.nomusuel + " est a " +  montantPrime2 + " de berry");
-				};
-				if ((prime1-prime2)==0){
-				System.err.println("PERDU : Ces deux personnages ont tous les deux la même prime");
-				};
-			};
-		if (prop6 == 3){
-			if ((prime1-prime2)<0){
-				System.err.println("PERDU : la prime de " + perso.nomusuel + " s'élève à " + montantPrime1 + " de berrys tandis que celle de " + perso3.nomusuel + " est a " +  montantPrime2 + " de berry");
-			};
-			if ((prime1-prime2)>0){System.err.println("PERDU : la prime de " + perso.nomusuel + " s'élève à " + montantPrime1 + " de berrys tandis que celle de " + perso3.nomusuel + " est a " +  montantPrime2 + " de berry");
-				};
-			if ((prime1-prime2)==0){
-				System.out.println("GAGNÉ : Ces deux personnages ont effectivement tous les deux la même prime");
-				System.out.println("+10 points!");
-				score = (score + 10);
-				};
-			};
+        if (persoPrincipal.getPrime() == persoSecondaire.getPrime()) {
+            return premierePartie + ", " + nomComplet(persoPrincipal) +
+                    " et "
+                    + nomComplet(persoSecondaire) + " ont la même prime ("
+                    + personnageService.personnagePrimeAffiche(persoPrincipal) + ")"
+                    ;
+        } else {
+            if (persoPrincipal.getPrime() > persoSecondaire.getPrime()) {
+                deuxiemePartie = " a une prime plus importante (" + personnageService.personnagePrimeAffiche(persoPrincipal) + ") que ";
+            } else if (persoPrincipal.getPrime() < persoSecondaire.getPrime()) {
+                deuxiemePartie = " a une prime moins forte (" + personnageService.personnagePrimeAffiche(persoPrincipal) + ") que ";
+            }
+        }
+            return premierePartie + ", " +
+                    nomComplet(persoPrincipal) +
+                    deuxiemePartie +
+                    nomComplet(persoSecondaire) + " (" +
+                    personnageService.personnagePrimeAffiche(persoSecondaire) + ")";
+        }
+    }
 
 
-		return score;
-	}
-
-*/
 
 

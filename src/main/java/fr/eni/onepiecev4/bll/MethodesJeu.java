@@ -11,6 +11,8 @@ public interface MethodesJeu {
 
     Personnage tiragePersonnage();
 
+    String nomComplet (Personnage personnage);
+
     boolean bonnesLettres(char[] prop, char[] tirage);
 
     char[] melanger(char[] mot);
@@ -40,6 +42,11 @@ public interface MethodesJeu {
     String reponseAge(String reponse, Personnage persoPrincipal, Personnage persoSecondaire);
 
     String AffichageReponseJeuAge(String resultat, Personnage persoPrincipal, Personnage persoSecondaire);
+
+
+    String reponsePrime(String reponse, Personnage persoPrincipal, Personnage persoSecondaire);
+
+    String AffichageReponseJeuPrime(String resultat, Personnage persoPrincipal, Personnage persoSecondaire);
 }
 
 

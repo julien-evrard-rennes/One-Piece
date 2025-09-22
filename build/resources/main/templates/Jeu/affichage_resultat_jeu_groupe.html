@@ -2,10 +2,10 @@
 
 
 <html data-th-replace="~{layout :: frag_layout(content= ~{::main},
-                                                title='Réponse jeu pseudo')}">
+                                                title='Question '+ ${numeroDeQuestion} )}">
 
 <main>
-    <h1> Le Jeu de One Piece</h1>
+    <h1 data-th-text="'Question ' + ${numeroDeQuestion} "> </h1>
 
     <div class="score">SCORE :
         <p class="chiffre_score" data-th-text="${'+ ' + score}"></p>
@@ -16,33 +16,37 @@
         <p data-th-text="${reponseAffiche}"></p>
     </div>
 
-    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : '
-    + personnageChoisi.nom + ' '
-    + personnageChoisi.particule + ' '
-    + personnageChoisi.prenom +
-     ' a t-'+ pronom +
-     ' le même âge que ' +
-     secondPerso.nom + ' '
-    + secondPerso.particule + ' '
-    + secondPerso.prenom + ' ?'}">  </h2>
+    <data-th-block data-th-if="${questionSuivante=='Age'}">
 
+    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : ' + nomComplet +
+     ' a t-'+ pronom + ' le même âge que ' + nomCompletPerso2 + ' ?'}">  </h2>
+    </data-th-block>
 
+    <div class="reponse">
     <form action="/jeu/jeu_age_reponse" method="post">
-        <div class="reponse">
             <div>
-
                 <input id="numerodequestion" name="numerodequestion" type="number" th:value="${numeroDeQuestion + 1}" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
                 <input id="idPerso2" name="idPerso2" type=number th:value="${secondPerso.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>
+        <data-th-block data-th-if="${questionSuivante=='Age'}">
             <div>
                 <button id="oui" name="reponse" value="oui" type="submit">OUI</button>
                 <button id="+vieux" name= "reponse" value="+vieux" type="submit"  th:text="${reponsePlusVieux}"></button>
                 <button id="+jeune" name= "reponse" value="+jeune" type="submit"  th:text="${reponsePlusJeune}"></button>
             </div>
-        </div>
+        </data-th-block>
+
+        <data-th-block data-th-if="${questionSuivante=='Passer'}">
+            <input id="idPerso2-alter" name="idPerso2" type=number value="0" hidden />
+            <div>
+                <button type="submit">Passage au jeu suivant</button>
+            </div>
+        </data-th-block>
+
     </form>
+        </div>
 
 </main>
 

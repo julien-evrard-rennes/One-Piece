@@ -2,36 +2,32 @@
 
 
 <html data-th-replace="~{layout :: frag_layout(content= ~{::main},
-                                                title='Réponse jeu age')}">
+                                                title='Question '+ ${numeroDeQuestion} )}">
 
 <main>
-    <h1> Le Jeu de One Piece</h1>
+    <h1 data-th-text="'Question ' + ${numeroDeQuestion} "> </h1>
 
     <div class="score">SCORE :
         <p class="chiffre_score" data-th-text="${'+ ' + score}"></p>
         <p class="chiffre_score_definitif" data-th-text="${nouveauScore}"></p>
     </div>
 
+    <data-th-block data-th-if="${reponseAfficher=='age'}">
+
     <div class="resultat">
         <p data-th-text="${reponseAffiche}"></p>
     </div>
+    </data-th-block>
 
-    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : Quel est la valeur de la prime de '
-    + personnageChoisi.nom + ' '
-    + personnageChoisi.particule + ' '
-    + personnageChoisi.prenom +
-     ' par rapport à celle de  ' +
-     troisiemePerso.nom + ' '
-    + troisiemePerso.particule + ' '
-    + troisiemePerso.prenom + ' ?'}">  </h2>
+    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : Quel est la valeur de la prime de ' + nomComplet +
+     ' par rapport à celle de  ' + nomCompletPerso3 + ' ?'}">  </h2>
 
-
+    <div class="reponse">
     <form action="/jeu/jeu_prime_reponse" method="post">
-        <div class="reponse">
             <div>
                 <input id="numerodequestion" name="numerodequestion" type="number" th:value="${numeroDeQuestion + 1}" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
-                <input id="idPerso2" name="idPerso2" type=number th:value="${troisiemePerso.id}" hidden />
+                <input id="idPerso3" name="idPerso3" type=number th:value="${troisiemePerso.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>
             <div>
@@ -39,8 +35,8 @@
                 <button id="+gros" name= "reponse" value="+gros" type="submit">PLUS HAUTE</button>
                 <button id="+bas" name= "reponse" value="+bas" type="submit">PLUS BASSE</button>
             </div>
-        </div>
     </form>
+    </div>
 
 </main>
 

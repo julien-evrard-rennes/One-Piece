@@ -2,10 +2,10 @@
 
 
 <html data-th-replace="~{layout :: frag_layout(content= ~{::main},
-                                                title='Réponse jeu pseudo')}">
+                                                title='Réponse à la question 2')}">
 
 <main>
-    <h1> Le Jeu de One Piece</h1>
+    <h1> Réponse à la question 2</h1>
 
     <div class="score">SCORE :
         <p class="chiffre_score" data-th-text="${'+ ' + score}"></p>
@@ -17,8 +17,9 @@
         <br><br>
     </div>
 
+    <div class="reponse">
     <form action="/jeu/jeu_groupe" method="post">
-        <div class="reponse">
+
             <div>
                 <input id="numerodequestion" name="numerodequestion" type="number" value="3" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
@@ -27,6 +28,7 @@
             <div>
                 <button type="submit">Passage au jeu suivant</button>
             </div>
+        </form>
         </div>
 
 </main>

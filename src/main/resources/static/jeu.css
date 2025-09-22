@@ -45,6 +45,12 @@ div.reponse {
     padding: 10px;
     margin: 10px;
     font-size: x-large;
+    margin-right: 15%;
+    padding: 5px;
+}
+
+div.reponse form{
+    background-color: aliceblue;
 }
 
 div.reponse button {

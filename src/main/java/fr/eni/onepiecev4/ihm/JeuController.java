@@ -59,6 +59,8 @@ public class JeuController {
 
         Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
         model.addAttribute("personnageChoisi", persoChoisi);
+        String nomComplet = methodesJeu.nomComplet(persoChoisi);
+        model.addAttribute("nomComplet", nomComplet);
 
         // On envoie à la vue une réponse selon le résultat
         String resultat = methodesJeu.jeuDesLettres(reponseNom, persoChoisi);
@@ -142,6 +144,8 @@ public class JeuController {
         Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
         model.addAttribute("numeroDeQuestion", numerodequestion);
         model.addAttribute("personnageChoisi", persoChoisi);
+        String nomComplet = methodesJeu.nomComplet(persoChoisi);
+        model.addAttribute("nomComplet", nomComplet);
 
         if (persoChoisi.getSexe() =='F') {
             model.addAttribute("pronom", "elle");
@@ -167,6 +171,7 @@ public class JeuController {
                                 Model model) {
         Personnage persoChoisi = personnageService.consulterPersonnageParId(idPerso);
         Groupe groupeChoisi = groupeService.consulterGroupeParId(idGroupe);
+        model.addAttribute("personnageChoisi", persoChoisi);
 
         /* On calcule si c'est gagné ou perdu */
         String resultat = methodesJeu.reponseEquipage(reponse, persoChoisi, groupeChoisi);
@@ -174,27 +179,45 @@ public class JeuController {
         /* On va créer dynamiquement une réponse qui va s'afficher */
         String reponseAffiche = methodesJeu.AffichageReponseJeuEquipage(resultat, reponse, persoChoisi, groupeChoisi);
         model.addAttribute("reponseAffiche", reponseAffiche);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
 
-        /* On relance le jeu suivant */
-
+        /* Affichage du score */
         Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
         model.addAttribute("score", pointsGagnes);
         model.addAttribute("nouveauScore", score + pointsGagnes);
 
-        model.addAttribute("numeroDeQuestion", numerodequestion);
-        model.addAttribute("personnageChoisi", persoChoisi);
-        Personnage secondPerso = methodesJeu.tiragePersonnageAvecAge();
-        model.addAttribute("secondPerso", secondPerso);
+        // Affichage de la prochaine question si on connait l'age du personnage
 
-        if (persoChoisi.getSexe() =='F') {
-            model.addAttribute("pronom", "elle");
-            model.addAttribute("reponsePlusVieux", "elle est plus vieille");
-            model.addAttribute("reponsePlusJeune", "elle est plus jeune");
-        }
-        else {
-            model.addAttribute("pronom", "il");
-            model.addAttribute("reponsePlusVieux", "il est plus vieux");
-            model.addAttribute("reponsePlusJeune", "il est plus jeune");
+        if (persoChoisi.getAge() >0) {
+            model.addAttribute("questionSuivante", "Age");
+            String nomComplet = methodesJeu.nomComplet(persoChoisi);
+            model.addAttribute("nomComplet", nomComplet);
+
+            /* Tirage d'un nouveau personnage et affichage de son nom */
+            Personnage secondPerso = methodesJeu.tiragePersonnageAvecAge();
+            if (secondPerso.getId() == persoChoisi.getId()) {
+                if (persoChoisi.getId() < groupeService.consulterGroupeList().size()) {
+                    secondPerso = personnageService.consulterPersonnageParId((idPerso) + 1);
+                } else {
+                    secondPerso = personnageService.consulterPersonnageParId((idPerso) - 1);
+                }
+            }
+            model.addAttribute("secondPerso", secondPerso);
+            String nomCompletPerso2 = methodesJeu.nomComplet(secondPerso);
+            model.addAttribute("nomCompletPerso2", nomCompletPerso2);
+
+            if (persoChoisi.getSexe() == 'F') {
+                model.addAttribute("pronom", "elle");
+                model.addAttribute("reponsePlusVieux", "elle est plus vieille");
+                model.addAttribute("reponsePlusJeune", "elle est plus jeune");
+            } else {
+                model.addAttribute("pronom", "il");
+                model.addAttribute("reponsePlusVieux", "il est plus vieux");
+                model.addAttribute("reponsePlusJeune", "il est plus jeune");
+            }
+        } else {
+            model.addAttribute("questionSuivante", "Passer");
+            model.addAttribute("secondPerso", persoChoisi);
         }
 
         return "/jeu/affichage_resultat_jeu_groupe";
@@ -202,42 +225,93 @@ public class JeuController {
 
     @PostMapping("/jeu_age_reponse")
     public String reponseAge(@RequestParam
-                                long idPerso,
-                                Integer score,
-                                int numerodequestion,
-                                long idPerso2,
-                                String reponse,
-                                Model model) {
+                             long idPerso,
+                             Integer score,
+                             int numerodequestion,
+                             long idPerso2,
+                             String reponse,
+                             Model model) {
         Personnage persoPrincipal = personnageService.consulterPersonnageParId(idPerso);
         Personnage persoSecondaire = personnageService.consulterPersonnageParId(idPerso2);
 
-        /* On calcule si c'est gagné ou perdu */
-        String resultat = methodesJeu.reponseAge(reponse, persoPrincipal, persoSecondaire);
-        model.addAttribute("resultat", resultat);
-        System.out.println(resultat);
+        // Si le jeu de l'age concerne le personnage
+        if (persoPrincipal.getAge()!= 0) {
 
-        /* On va créer dynamiquement une réponse qui va s'afficher */
-        String reponseAffiche = methodesJeu.AffichageReponseJeuAge(resultat, persoPrincipal, persoSecondaire);
-        System.out.println(reponseAffiche);
-        model.addAttribute("reponseAffiche", reponseAffiche);
+            model.addAttribute("reponseAfficher", "age");
 
-        /* On lance et on affiche le jeu suivant */
+            // On calcule si c'est gagné ou perdu
+            String resultat = methodesJeu.reponseAge(reponse, persoPrincipal, persoSecondaire);
+            model.addAttribute("resultat", resultat);
 
+            // On va créer dynamiquement une réponse qui va s'afficher
+            String reponseAffiche = methodesJeu.AffichageReponseJeuAge(resultat, persoPrincipal, persoSecondaire);
+            model.addAttribute("reponseAffiche", reponseAffiche);
+
+            // Affichage du score
+            Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
+            model.addAttribute("score", pointsGagnes);
+            model.addAttribute("nouveauScore", score + pointsGagnes);
+        }
+        else {
+            Integer pointsGagnes = 0;
+            model.addAttribute("score", pointsGagnes);
+            model.addAttribute("nouveauScore", score + pointsGagnes);
+            model.addAttribute("reponseAfficher", "rien");
+        }
+
+        // On lance et on affiche le jeu suivant
         model.addAttribute("numeroDeQuestion", numerodequestion);
+        model.addAttribute("personnageChoisi", persoPrincipal);
+        String nomComplet = methodesJeu.nomComplet(persoPrincipal);
+        model.addAttribute("nomComplet", nomComplet);
+
+        /* Tirage du persoTertiaire et affichage de son nom */
 
         Personnage persoTertiaire = methodesJeu.tiragePersonnageAvecPrime();
-
-        model.addAttribute("personnageChoisi", persoPrincipal);
-        model.addAttribute("secondPerso", persoSecondaire);
-        model.addAttribute("troisiemePerso", persoSecondaire);
-
-        Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
-        model.addAttribute("score", pointsGagnes);
-        model.addAttribute("nouveauScore", score + pointsGagnes);
+        if (persoTertiaire.getId() == persoPrincipal.getId()) {
+            if (persoPrincipal.getId() > 1) {
+                persoTertiaire = personnageService.consulterPersonnageParId((idPerso) - 1);
+            } else {
+                persoTertiaire = personnageService.consulterPersonnageParId((idPerso) + 1);
+            }
+        }
+        model.addAttribute("troisiemePerso", persoTertiaire);
+        String nomCompletPerso3 = methodesJeu.nomComplet(persoTertiaire);
+        model.addAttribute("nomCompletPerso3", nomCompletPerso3);
 
         return "/jeu/affichage_resultat_jeu_age";
     }
 
+    @PostMapping("/jeu_prime_reponse")
+    public String reponsePrime(@RequestParam
+                             long idPerso,
+                             Integer score,
+                             int numerodequestion,
+                             long idPerso3,
+                             String reponse,
+                             Model model) {
+        Personnage persoPrincipal = personnageService.consulterPersonnageParId(idPerso);
+        Personnage persoSecondaire = personnageService.consulterPersonnageParId(idPerso3);
+
+        model.addAttribute("personnageChoisi", persoPrincipal);
+        String nomComplet = methodesJeu.nomComplet(persoPrincipal);
+        model.addAttribute("nomComplet", nomComplet);
+
+        /* On calcule si c'est gagné ou perdu */
+        String resultat = methodesJeu.reponsePrime(reponse, persoPrincipal, persoSecondaire);
+        model.addAttribute("resultat", resultat);
+
+        /* On va créer dynamiquement une réponse qui va s'afficher */
+        String reponseAffiche = methodesJeu.AffichageReponseJeuPrime(resultat, persoPrincipal, persoSecondaire);
+        model.addAttribute("reponseAffiche", reponseAffiche);
+
+        /* Affichage du score */
+        Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
+        model.addAttribute("score", pointsGagnes);
+        model.addAttribute("nouveauScore", score + pointsGagnes);
+
+        return "/jeu/affichage_resultat_jeu_prime";
+    }
 
 
     }
