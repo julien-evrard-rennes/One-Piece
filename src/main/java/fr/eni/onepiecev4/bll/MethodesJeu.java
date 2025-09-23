@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface MethodesJeu {
 
+
+
     Groupe tirageGroupe();
 
     Personnage tiragePersonnage();
 
     String nomComplet (Personnage personnage);
-
-    boolean bonnesLettres(char[] prop, char[] tirage);
 
     char[] melanger(char[] mot);
 
@@ -43,10 +43,12 @@ public interface MethodesJeu {
 
     String AffichageReponseJeuAge(String resultat, Personnage persoPrincipal, Personnage persoSecondaire);
 
-
     String reponsePrime(String reponse, Personnage persoPrincipal, Personnage persoSecondaire);
 
     String AffichageReponseJeuPrime(String resultat, Personnage persoPrincipal, Personnage persoSecondaire);
+
+    Integer calculerscorefinal(float score, float total);
+
 }
 
 

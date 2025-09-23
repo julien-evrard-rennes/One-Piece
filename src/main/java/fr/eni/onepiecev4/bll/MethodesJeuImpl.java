@@ -236,44 +236,6 @@ public class MethodesJeuImpl implements MethodesJeu {
         return ok;
     }
 
-    /**
-     * Méthode en charge de vérifier si tous les caractères présents dans le tableau
-     * de caracteres {@code prop} sont présents dans le tableau de caractères
-     * {@code tirage}. Un caractère présent plusieurs fois dans {@code prop} doit
-     * être présent au moins autant de fois dans {@code tirage}.
-     *
-     * @param prop   le tableau avec les caractères à vérifier.
-     * @param tirage le tableau avec les caractères à utiliser.
-     * @return vrai si uniquement les caractères présent dans {@code tirage} sont
-     * utilisés dans {@code prop}
-     */
-
-    @Override
-    public boolean bonnesLettres(char[] prop, char[] tirage) {
-        // clonage du tableau
-        char[] copie = new char[tirage.length];
-        for (int i = 0; i < copie.length; i++) {
-            copie[i] = tirage[i];
-        }
-
-        // Vérification de chaque lettre de la proposition
-        int j = 0;
-        boolean ok = true;
-        while (ok && j < prop.length) {
-            int k = 0;
-            while (k < copie.length && prop[j] != copie[k]) {
-                k++;
-            }
-            if (k == copie.length) {
-                ok = false;
-            } else {
-                copie[k] = VIDE;
-                j++;
-            }
-        }
-        return ok;
-    }
-
     @Override
     public Integer calculduScore(Integer score, String resultat) {
         if (resultat.equals("Complete")) {
@@ -510,7 +472,7 @@ public class MethodesJeuImpl implements MethodesJeu {
                 if (persoPrincipal.getSexe() == 'F') {
                     deuxiemePartie = " est plus vieille";
                 } else {
-                    deuxiemePartie = "est plus vieux ";
+                    deuxiemePartie = " est plus vieux ";
                 }
             } else if (persoPrincipal.getAge() < persoSecondaire.getAge()) {
                     deuxiemePartie = " est plus jeune ";
@@ -580,7 +542,23 @@ public class MethodesJeuImpl implements MethodesJeu {
                     nomComplet(persoSecondaire) + " (" +
                     personnageService.personnagePrimeAffiche(persoSecondaire) + ")";
         }
+
+    @Override
+    public Integer calculerscorefinal(float score, float total) {
+        if (score !=0) {
+            float division = score / total;
+            float pourcentage = division * 100;
+            return Math.round(pourcentage);
+        }
+        else {
+            return 0;
+        }
     }
+}
+
+
+
+
 
 
 

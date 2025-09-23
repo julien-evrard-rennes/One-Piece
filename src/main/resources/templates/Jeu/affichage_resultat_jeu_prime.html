@@ -19,8 +19,8 @@
 
     <div class="reponse">
     <form action="/jeu/finir_le_jeu" method="post">
-
             <div>
+                <input id="numerodequestion" name="numerodequestion" type="number" th:value="${numeroDeQuestion}" hidden />
                 <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden />
                 <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
             </div>

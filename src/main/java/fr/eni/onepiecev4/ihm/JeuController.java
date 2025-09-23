@@ -300,6 +300,7 @@ public class JeuController {
         /* On calcule si c'est gagné ou perdu */
         String resultat = methodesJeu.reponsePrime(reponse, persoPrincipal, persoSecondaire);
         model.addAttribute("resultat", resultat);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
 
         /* On va créer dynamiquement une réponse qui va s'afficher */
         String reponseAffiche = methodesJeu.AffichageReponseJeuPrime(resultat, persoPrincipal, persoSecondaire);
@@ -311,6 +312,31 @@ public class JeuController {
         model.addAttribute("nouveauScore", score + pointsGagnes);
 
         return "/jeu/affichage_resultat_jeu_prime";
+    }
+
+
+
+    @PostMapping ("/finir_le_jeu")
+    public String cartonDeFin (@RequestParam
+                               long idPerso,
+                               Integer score,
+                               int numerodequestion,
+                               Model model){
+        Personnage persoPrincipal = personnageService.consulterPersonnageParId(idPerso);
+        model.addAttribute("personnageChoisi", persoPrincipal);
+        String nomComplet = methodesJeu.nomComplet(persoPrincipal);
+        model.addAttribute("nomComplet", nomComplet);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
+        model.addAttribute("score", score);
+        Integer total = (numerodequestion * 10);
+        model.addAttribute("total", total);
+
+        Integer pourcentage = methodesJeu.calculerscorefinal(score, total);
+        model.addAttribute("pourcentage", pourcentage);
+
+        model.addAttribute("reponseAffiche", "");
+
+        return "/jeu/affichage_conclusion";
     }
 
 
