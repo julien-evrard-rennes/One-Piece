@@ -121,7 +121,7 @@ public class JeuController {
                     + " est bien '" + persoChoisi.getSurnom() + "'");
         }
         if (resultat.equals("Perdu")) {
-            model.addAttribute("resultat", "Perdu, le surnom de"
+            model.addAttribute("resultat", "Perdu, le surnom de "
                     +persoChoisi.getNom() + ' ' + persoChoisi.getPrenom() 
                     + " est '" + persoChoisi.getSurnom()+ "'");
         }

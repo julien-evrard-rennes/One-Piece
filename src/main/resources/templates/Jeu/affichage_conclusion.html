@@ -7,7 +7,7 @@
 <main>
     <h1 data-th-text="'Fin de partie' "> </h1>
 
-    <div class="resultat">
+    <div class="resultatFinal">
     <div data-th-if="${pourcentage} == 100" id="Parfait">
             <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
             <p data-th-text="${pourcentage} + '%' "></p>
@@ -29,7 +29,7 @@
     <div data-th-if="${pourcentage <= 50 && pourcentage > 25}" >
         <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
         <p data-th-text="${pourcentage} + '%' "></p>
-        <p data-th-text="'Le personnage de '  + ${nomComplet} + ' ne vous est pas inconnu, mais vous avez des lacunes"></p>
+        <p data-th-text="'Le personnage de '  + ${nomComplet} + ' ne vous est pas inconnu, mais vous avez des lacunes'"></p>
     </div>
 
     <div data-th-if="${pourcentage <= 25 && pourcentage > 0}" id="pasOuf">

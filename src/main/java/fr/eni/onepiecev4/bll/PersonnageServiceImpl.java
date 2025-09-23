@@ -77,6 +77,12 @@ public class PersonnageServiceImpl implements PersonnageService {
         personnageDAO.mettreajourPersonnage(personnage);
     }
 
+    /**
+     * Fonction permettant d'afficher la prime selon sa force (normal, milliers, millions, milliards.)
+     * @param personnage
+     * @return
+     */
+
     @Override
     public String personnagePrimeAffiche(Personnage personnage) {
         float prime = personnage.getPrime();
@@ -85,11 +91,11 @@ public class PersonnageServiceImpl implements PersonnageService {
             if (prime/2000>1){
                 if(prime/1000000>1){
                     if(prime/1000000000>1){
-                        return prime/1000000000 + " milliards de berrys";
+                        return Math.round(prime/1000000000) + " milliards de berrys";
                     }
-                  return prime/1000000 + " millions de berrys";
+                  return Math.round(prime/1000000) + " millions de berrys";
                 }
-            return prime/1000 + " milliers de berrys";
+            return Math.round(prime/1000) + " milliers de berrys";
             }
             long primePropre =  (long)prime;
         return primePropre + " berrys";
