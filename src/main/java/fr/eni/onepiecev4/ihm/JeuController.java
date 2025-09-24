@@ -29,7 +29,13 @@ public class JeuController {
     //}
 
     @GetMapping
-    public String affichageJeu( Model model) {
+    public String jeu(Model model) {
+
+        return "/jeu/choix_des_jeux";
+    }
+
+    @GetMapping("/etape_melange")
+    public String affichageJeuMelange( Model model) {
 
         // Tirage d'un personnage
         Personnage personnageChoisi = methodesJeu.tiragePersonnage();
@@ -44,7 +50,7 @@ public class JeuController {
         Integer score =0;
         model.addAttribute("score", score);
 
-        return "/jeu/affichage_jeu_melange";
+        return "/jeu/affichage_melange";
     }
 
 
@@ -94,8 +100,7 @@ public class JeuController {
             model.addAttribute("questionSuivante", "Passer");
         }
 
-
-        return "/jeu/affichage_resultat_melange"; // renvoie vers la page de résultat
+        return "/jeu/resultat_melange"; // renvoie vers la page de résultat
     }
 
 
@@ -131,7 +136,7 @@ public class JeuController {
         model.addAttribute("score", pointsGagnes);
         model.addAttribute("nouveauScore", score + pointsGagnes);
 
-        return "/jeu/affichage_resultat_pseudo"; // renvoie vers la page de résultat
+        return "/jeu/resultat_pseudo"; // renvoie vers la page de résultat
     }
 
     @PostMapping("/jeu_groupe")
@@ -158,7 +163,7 @@ public class JeuController {
         Groupe groupeChoisi = methodesJeu.tirageGroupe();
         model.addAttribute("groupeChoisi", groupeChoisi);
 
-        return "/jeu/affichage_jeu_groupe";
+        return "/jeu/etape_groupe";
     }
 
     @PostMapping("/jeu_groupe_reponse")
@@ -220,7 +225,7 @@ public class JeuController {
             model.addAttribute("secondPerso", persoChoisi);
         }
 
-        return "/jeu/affichage_resultat_jeu_groupe";
+        return "/jeu/resultat_groupe";
     }
 
     @PostMapping("/jeu_age_reponse")
@@ -279,7 +284,7 @@ public class JeuController {
         String nomCompletPerso3 = methodesJeu.nomComplet(persoTertiaire);
         model.addAttribute("nomCompletPerso3", nomCompletPerso3);
 
-        return "/jeu/affichage_resultat_jeu_age";
+        return "/jeu/resultat_age";
     }
 
     @PostMapping("/jeu_prime_reponse")
@@ -311,7 +316,7 @@ public class JeuController {
         model.addAttribute("score", pointsGagnes);
         model.addAttribute("nouveauScore", score + pointsGagnes);
 
-        return "/jeu/affichage_resultat_jeu_prime";
+        return "/jeu/resultat_prime";
     }
 
 
@@ -336,7 +341,7 @@ public class JeuController {
 
         model.addAttribute("reponseAffiche", "");
 
-        return "/jeu/affichage_conclusion";
+        return "/jeu/conclusion";
     }
 
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Choix du jeu' )}">
+
+<main>
+    <div class="presentation">
+    <h1 data-th-text="'Choix du mode de jeu' "> </h1>
+
+    <div class="choix">
+        <div class="choix_mystere">
+            <b>LE PERSONNAGE MYSTÈRE :</b>
+            Trouvez le personnage mystère et répondez aux questions sur lui
+            <button><a href="/jeu/etape_melange">JOUER</a></button>
+        </div>
+
+        <div class="choix_prime">
+            <b>BATAILLE DE PRIMES :</b>
+            Trouvez qui a la plus grosse prime
+            <button><a href="/">JOUER</a></button>
+        </div>
+
+        <div class="choix_age">
+            <b>VIEILLESSE OBLIGE :</b>
+            Trouvez qui est le plus âgé
+            <button><a href="/">JOUER</a></button>
+        </div>
+    </div>
+
+    </div>
+
+</main>
+
+</html>

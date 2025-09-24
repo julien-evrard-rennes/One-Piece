@@ -1,5 +1,6 @@
 
 main {
+
 }
 
 h2 {
@@ -40,16 +41,85 @@ table.tirage th.interclasse {
     color: #b33939;
 }
 
+div.presentation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 div.score {
     font-family: sans-serif;
     font-weight: bold;
     font-size: x-large;
     display: flex;
     justify-content: flex-end;
-    margin-right: 15%;
     padding: 5px;
 
 }
+
+div.choix{
+    font-family: sans-serif;
+    font-size: large;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+div.choix div.choix_mystere {
+    background-color: #bff8dd;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    padding:10px;
+    justify-content: space-between;
+}
+
+div.choix div.choix_prime {
+    background-color: #92a0fa;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    padding:10px;
+    justify-content: space-between;
+}
+
+div.choix div.choix_age {
+    background-color: #f3a4c2;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    padding:10px;
+    justify-content: space-between;
+}
+
+div.choix button {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px; padding : 6px 6px;
+    background: #0f0e40;
+    border:none;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+div.choix button a{
+    width:100%;
+    color:white;
+    text-decoration: none;
+}
+
+div.choix button:hover {
+    background-color: #5d85ec;
+}
+
 
 div.resultat{
     font-family: sans-serif;
@@ -61,6 +131,8 @@ div.resultat{
     background-color: #fff0f0;
     flex-wrap: wrap;
     padding: 10px;
+    flex-direction: column;
+    align-content: space-around;
 }
 
 div.resultatFinal{
@@ -74,11 +146,11 @@ div.resultatFinal{
     flex-wrap: wrap;
 }
 
-div.resultat p{
+div.resultatFinal p, div.resultat p{
     flex:inherit;
 }
 
-div.resultat div#Parfait {
+div.resultatFinal div#Parfait {
     background-color: #bff8dd;
     width: 100%;
     display: flex;
@@ -89,7 +161,7 @@ div.resultat div#Parfait {
 
 }
 
-div.resultat div#tresBon {
+div.resultatFinal div#tresBon {
     background-color: #d4f3e7;
     width: 100%;
     display: flex;
@@ -99,7 +171,7 @@ div.resultat div#tresBon {
     padding:10px;
 }
 
-div.resultat div#Bon {
+div.resultatFinal div#Bon {
     background-color: #f0fff8;
     width: 100%;
     display: flex;
@@ -109,7 +181,7 @@ div.resultat div#Bon {
     padding:10px;
 }
 
-div.resultat div#pasOuf {
+div.resultatFinal div#pasOuf {
     background-color: #f1cbcb;
     width: 100%;
     display: flex;
@@ -119,7 +191,7 @@ div.resultat div#pasOuf {
     padding:10px;
 }
 
-div.resultat div#nul {
+div.resultatFinal div#nul {
     background-color: #f3a7a7;
     width: 100%;
     display: flex;
@@ -130,12 +202,13 @@ div.resultat div#nul {
 }
 
 div.reponse {
-    background-color: aliceblue;
+    background-color:aliceblue;
     padding: 10px;
     margin: 10px;
     font-size: x-large;
-    margin-right: 15%;
     padding: 5px;
+    display:flex;
+    justify-content: space-around;
 }
 
 div.reponse form{
