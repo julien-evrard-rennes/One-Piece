@@ -1,12 +1,14 @@
 
 main {
-
+    background-color: rgb(253 253 253 / 56%)
 }
+
+body { background-image: url("/images/image_de_fond.png") }
 
 h2 {
     font-style:oblique;
     color: #170505;
-    margin:15px;
+    margin:10px;
     padding:5px;
 }
 
@@ -32,7 +34,7 @@ table.tirage th {
 }
 
 table.tirage tr:hover {
-    background-color:white;
+    background-color:transparent;
 }
 
 table.tirage th.interclasse {
@@ -41,10 +43,13 @@ table.tirage th.interclasse {
     color: #b33939;
 }
 
-div.presentation {
+div.presentation, data-th-block.presentation {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:90%;
+    flex-wrap: wrap;
+    padding: 10px;
 }
 
 div.score {
@@ -54,7 +59,21 @@ div.score {
     display: flex;
     justify-content: flex-end;
     padding: 5px;
+    margin-right:15%;
+}
 
+div.presentation div.score{
+    width: 300%;
+}
+
+div.presentation-bouton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    flex-wrap: nowrap;
+    padding: 10px;
+    justify-content: space-evenly;
 }
 
 div.choix{
@@ -122,6 +141,8 @@ div.choix button:hover {
 
 
 div.resultat{
+    border: 2px solid #0000004f;
+    border-radius: 5px;
     font-family: sans-serif;
     font-weight: bold;
     font-size: large;
@@ -133,17 +154,25 @@ div.resultat{
     padding: 10px;
     flex-direction: column;
     align-content: space-around;
+    margin: auto;
+    width:75%;
+}
+
+div.presentation div.resultat {
+    width:75%;
 }
 
 div.resultatFinal{
+    border: 2px solid #000000;
+    border-radius: 5px;
     font-family: sans-serif;
-    font-weight: bold;
     font-size: large;
     display: flex;
     justify-content: space-evenly;
-    margin-right: 15%;
+    margin: 2% 10%;
     background-color: #fff0f0;
     flex-wrap: wrap;
+    border: 5% solid;
 }
 
 div.resultatFinal p, div.resultat p{
@@ -181,6 +210,15 @@ div.resultatFinal div#Bon {
     padding:10px;
 }
 
+div.resultatFinal div#Moyen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    padding:10px;
+}
+
 div.resultatFinal div#pasOuf {
     background-color: #f1cbcb;
     width: 100%;
@@ -202,17 +240,16 @@ div.resultatFinal div#nul {
 }
 
 div.reponse {
-    background-color:aliceblue;
-    padding: 10px;
+    /* background-color: #f0f8ffc2; */
+    padding: 15px;
     margin: 10px;
     font-size: x-large;
-    padding: 5px;
-    display:flex;
+    display: flex;
     justify-content: space-around;
 }
 
 div.reponse form{
-    background-color: aliceblue;
+    background-color: transparent;
 }
 
 div.reponse button {
@@ -238,10 +275,7 @@ div.reponse button:hover {
 div.reponse div{
     display: flex;
     justify-content: space-around;
-
 }
-
-
 
 p.chiffre_score {
     animation-name: fadeIn, slidein;

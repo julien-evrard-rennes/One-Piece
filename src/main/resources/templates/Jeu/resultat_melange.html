@@ -12,14 +12,11 @@
         <p class="chiffre_score_definitif" data-th-text="${nouveauScore}"></p>
     </div>
 
-    <!--<div  data-th-text="${'Ta réponse était ' + reponseBrute }">  </div> -->
     <div class="resultat">
-        <p data-th-text="${'Le personnage a trouver était ' + nomComplet }"></p>
-        <br><br>
-        <p data-th-text="${resultat}"></p>
+        <p data-th-text="${resultat + ' Le personnage a trouver était ' + nomComplet }"></p>
     </div>
 
-    <data-th-block data-th-if="${questionSuivante=='Surnom'}">
+    <data-th-block class="presentation" data-th-if="${questionSuivante=='Surnom'}">
 
         <h2> Question 2 : Quel est le pseudonyme de ce personnage ? </h2>
 
@@ -27,11 +24,8 @@
             <form action="/jeu/question_pseudo" method="post">
 
                 <div>
-                    <input id="idPerso" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden/>
-                    <input id="score" name="score" type=number th:value="${nouveauScore}" hidden/>
-                </div>
-                <div>
-                    <p data-th-text="${triche}"></p><br>
+                    <input id="idPerso1" name="idPerso" type=number th:value="${personnageChoisi.id}" hidden/>
+                    <input id="score1" name="score" type=number th:value="${nouveauScore}" hidden/>
                 </div>
 
                 <input type="radio" id="prop1" name="reponsePseudo" th:value="${proposition1}" required/>
@@ -40,7 +34,7 @@
                 <input type="radio" id="prop2" name="reponsePseudo" th:value="${proposition2}" required/>
                 <label data-th-text="${proposition2}"></label>
                 <br>
-                <input type="radio" id="prop2" name="reponsePseudo" th:value="${proposition3}" required/>
+                <input type="radio" id="prop3" name="reponsePseudo" th:value="${proposition3}" required/>
                 <label data-th-text="${proposition3}"></label>
                 <br>
 

@@ -29,9 +29,169 @@ public class JeuController {
     //}
 
     @GetMapping
-    public String jeu(Model model) {
-
+    public String jeu() {
         return "/jeu/choix_des_jeux";
+    }
+
+    @GetMapping("/jeu_prime")
+    public String jeu_prime(Model model) {
+        Personnage premierPersonnage = methodesJeu.tiragePersonnageAvecPrime();
+        Personnage deuxiemePersonnage = methodesJeu.tiragePersonnageAvecPrime();
+        if (premierPersonnage.getId() == deuxiemePersonnage.getId()) {
+            if (premierPersonnage.getId() > 1) {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) - 1);
+            } else {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) + 1);
+            }
+        }
+        model.addAttribute("numeroDeQuestion", 1);
+        model.addAttribute("premierPersonnage", premierPersonnage);
+        model.addAttribute("deuxiemePersonnage", deuxiemePersonnage);
+        model.addAttribute("nomComplet", methodesJeu.nomComplet(premierPersonnage));
+        model.addAttribute("nomCompletChallenger", methodesJeu.nomComplet(deuxiemePersonnage));
+        model.addAttribute("nouveauScore", 0);
+
+        return "/jeu/jeu_des_primes";
+    }
+
+    @PostMapping("/jeu_prime")
+    public String jeu_des_primes_reponse(@RequestParam
+                                         long idPerso,
+                                         Integer score,
+                                         int numerodequestion,
+                                         long idPerso2,
+                                         String reponse,
+                                         Model model) {
+        Personnage persoPrincipal = personnageService.consulterPersonnageParId(idPerso);
+        Personnage persoSecondaire = personnageService.consulterPersonnageParId(idPerso2);
+
+        // On calcule si c'est gagné ou perdu
+        String resultat = methodesJeu.reponsePrime(reponse, persoPrincipal, persoSecondaire);
+        model.addAttribute("resultat", resultat);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
+
+        // Affichage du score
+        Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
+        model.addAttribute("score", pointsGagnes);
+        model.addAttribute("nouveauScore", score + pointsGagnes);
+
+        // On va créer dynamiquement une réponse qui va s'afficher
+        String reponseAffiche = methodesJeu.AffichageReponseJeuPrime(resultat, persoPrincipal, persoSecondaire);
+        model.addAttribute("reponseAffiche", reponseAffiche);
+
+        //Relance de la prochaine manche
+        Personnage premierPersonnage = methodesJeu.tiragePersonnageAvecPrime();
+        Personnage deuxiemePersonnage = methodesJeu.tiragePersonnageAvecPrime();
+        if (premierPersonnage.getId() == deuxiemePersonnage.getId()) {
+            if (premierPersonnage.getId() > 1) {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) - 1);
+            } else {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) + 1);
+            }
+        }
+        model.addAttribute("premierPersonnage", premierPersonnage);
+        model.addAttribute("deuxiemePersonnage", deuxiemePersonnage);
+        model.addAttribute("nomComplet", methodesJeu.nomComplet(premierPersonnage));
+        model.addAttribute("nomCompletChallenger", methodesJeu.nomComplet(deuxiemePersonnage));
+
+        //Création d'un panneau qui s'affiche lorsqu'on arrive au bout de 10 questions
+        Integer total = 100;
+        model.addAttribute("total", total);
+        Integer pourcentage = methodesJeu.calculerscorefinal(score, total);
+        model.addAttribute("pourcentage", pourcentage);
+
+        return "/jeu/jeu_des_primes";
+    }
+
+    @GetMapping("/jeu_age")
+    public String jeu_Age(Model model) {
+        Personnage premierPersonnage = methodesJeu.tiragePersonnageAvecAge();
+        Personnage deuxiemePersonnage = methodesJeu.tiragePersonnageAvecAge();
+        if (premierPersonnage.getId() == deuxiemePersonnage.getId()) {
+            if (premierPersonnage.getId() > 1) {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) - 1);
+            } else {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) + 1);
+            }
+        }
+        model.addAttribute("numeroDeQuestion", 1);
+        model.addAttribute("premierPersonnage", premierPersonnage);
+        model.addAttribute("deuxiemePersonnage", deuxiemePersonnage);
+        model.addAttribute("nomComplet", methodesJeu.nomComplet(premierPersonnage));
+        model.addAttribute("nomCompletChallenger", methodesJeu.nomComplet(deuxiemePersonnage));
+        model.addAttribute("nouveauScore", 0);
+
+        if (premierPersonnage.getSexe() == 'F') {
+            model.addAttribute("pronom", "elle");
+            model.addAttribute("reponsePlusVieux", "elle est plus vieille");
+            model.addAttribute("reponsePlusJeune", "elle est plus jeune");
+        } else {
+            model.addAttribute("pronom", "il");
+            model.addAttribute("reponsePlusVieux", "il est plus vieux");
+            model.addAttribute("reponsePlusJeune", "il est plus jeune");
+        }
+
+
+        return "/jeu/jeu_des_ages";
+    }
+
+    @PostMapping("/jeu_age")
+    public String jeu_des_ages_reponse(@RequestParam
+                                         long idPerso,
+                                         Integer score,
+                                         int numerodequestion,
+                                         long idPerso2,
+                                         String reponse,
+                                         Model model) {
+        Personnage persoPrincipal = personnageService.consulterPersonnageParId(idPerso);
+        Personnage persoSecondaire = personnageService.consulterPersonnageParId(idPerso2);
+
+        // On calcule si c'est gagné ou perdu
+        String resultat = methodesJeu.reponseAge(reponse, persoPrincipal, persoSecondaire);
+        model.addAttribute("resultat", resultat);
+        model.addAttribute("numeroDeQuestion", numerodequestion);
+
+        // Affichage du score
+        Integer pointsGagnes = methodesJeu.calculduScore2(resultat);
+        model.addAttribute("score", pointsGagnes);
+        model.addAttribute("nouveauScore", score + pointsGagnes);
+
+        // On va créer dynamiquement une réponse qui va s'afficher
+        String reponseAffiche = methodesJeu.AffichageReponseJeuAge(resultat, persoPrincipal, persoSecondaire);
+        model.addAttribute("reponseAffiche", reponseAffiche);
+
+        //Relance de la prochaine manche
+        Personnage premierPersonnage = methodesJeu.tiragePersonnageAvecAge();
+        Personnage deuxiemePersonnage = methodesJeu.tiragePersonnageAvecAge();
+        if (premierPersonnage.getId() == deuxiemePersonnage.getId()) {
+            if (premierPersonnage.getId() > 1) {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) - 1);
+            } else {
+                deuxiemePersonnage = personnageService.consulterPersonnageParId((deuxiemePersonnage.getId()) + 1);
+            }
+        }
+        model.addAttribute("premierPersonnage", premierPersonnage);
+        model.addAttribute("deuxiemePersonnage", deuxiemePersonnage);
+        model.addAttribute("nomComplet", methodesJeu.nomComplet(premierPersonnage));
+        model.addAttribute("nomCompletChallenger", methodesJeu.nomComplet(deuxiemePersonnage));
+
+        //Création d'un panneau qui s'affiche lorsqu'on arrive au bout de 10 questions
+        Integer total = 100;
+        model.addAttribute("total", total);
+        Integer pourcentage = methodesJeu.calculerscorefinal(score, total);
+        model.addAttribute("pourcentage", pourcentage);
+
+        if (premierPersonnage.getSexe() == 'F') {
+            model.addAttribute("pronom", "elle");
+            model.addAttribute("reponsePlusVieux", "elle est plus vieille");
+            model.addAttribute("reponsePlusJeune", "elle est plus jeune");
+        } else {
+            model.addAttribute("pronom", "il");
+            model.addAttribute("reponsePlusVieux", "il est plus vieux");
+            model.addAttribute("reponsePlusJeune", "il est plus jeune");
+        }
+
+        return "/jeu/jeu_des_ages";
     }
 
     @GetMapping("/etape_melange")
@@ -80,7 +240,7 @@ public class JeuController {
             model.addAttribute("resultat", "Vous n'avez trouvé que son prénom.");
         }
         if (resultat.isEmpty()){
-            model.addAttribute("resultat", "Perdu");
+            model.addAttribute("resultat", "Perdu.");
         }
 
         // Affichage du score de manière dynamique
@@ -287,7 +447,7 @@ public class JeuController {
         return "/jeu/resultat_age";
     }
 
-    @PostMapping("/jeu_prime_reponse")
+    @PostMapping("/etape_prime_reponse")
     public String reponsePrime(@RequestParam
                              long idPerso,
                              Integer score,
@@ -338,8 +498,6 @@ public class JeuController {
 
         Integer pourcentage = methodesJeu.calculerscorefinal(score, total);
         model.addAttribute("pourcentage", pourcentage);
-
-        model.addAttribute("reponseAffiche", "");
 
         return "/jeu/conclusion";
     }

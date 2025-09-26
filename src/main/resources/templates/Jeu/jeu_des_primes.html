@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+
+<html data-th-replace="~{layout :: frag_layout(content= ~{::main},
+                                                title='Bataille des primes' )}">
+
+<main>
+    <div class="presentation">
+    <h1 data-th-text="'Bataille des primes'"> </h1>
+
+        <datablock data-th-if="${numeroDeQuestion>1}">
+            <div class="score">SCORE :
+                <p class="chiffre_score" data-th-text="${'+ ' + score}"></p>
+                <p class="chiffre_score_definitif" data-th-text="${nouveauScore}"></p>
+            </div>
+        </datablock>
+
+        <datablock class="presentation" data-th-if="${numeroDeQuestion>1}">
+            <div class="resultat">
+                <p data-th-text="${reponseAffiche}"></p>
+            </div>
+        </datablock>
+
+        <datablock class="presentation" data-th-if="${numeroDeQuestion<11}">
+    <h2 data-th-text="${'Question ' + numeroDeQuestion + ' : Quelle est la valeur de la prime de ' + nomComplet +
+     ' par rapport à celle de  ' + nomCompletChallenger + ' ?'}">  </h2>
+
+    <div class="reponse">
+    <form action="/jeu/jeu_prime" method="post">
+            <div>
+                <input id="numerodequestion" name="numerodequestion" type="number" th:value="${numeroDeQuestion} +1" hidden />
+                <input id="idPerso" name="idPerso" type=number th:value="${premierPersonnage.id}" hidden />
+                <input id="idPerso2" name="idPerso2" type=number th:value="${deuxiemePersonnage.id}" hidden />
+                <input id="score" name="score" type=number th:value="${nouveauScore}" hidden />
+            </div>
+            <div>
+                <button id="egal" name="reponse" value="egal" type="submit">ÉGALE</button>
+                <button id="+gros" name= "reponse" value="+gros" type="submit">PLUS HAUTE</button>
+                <button id="+bas" name= "reponse" value="+bas" type="submit">PLUS BASSE</button>
+            </div>
+    </form>
+    </div>
+        </datablock>
+
+    <datablock data-th-if="${numeroDeQuestion} == 11">
+        <div class="resultatFinal">
+            <div data-th-if="${pourcentage} == 100" id="Parfait">
+                <p data-th-text="'Votre score est de '+ ${nouveauScore} + ' sur ' + ${total}"></p>
+                <p data-th-text="${pourcentage} + '%' "></p>
+                <p data-th-text="'C\'est impressionnant, vous êtes calés sur One Piece'"></p>
+            </div>
+
+            <div data-th-if="${pourcentage < 100 && pourcentage > 75}" id="tresBon">
+                <p data-th-text="'Votre score est de '+ ${nouveauScore} + ' sur ' + ${total}"></p>
+                <p data-th-text="${pourcentage} + '%' "></p>
+                <p data-th-text="'Bravo, vous semblez bien connaitre les primes dans One Piece'"></p>
+            </div>
+
+            <div data-th-if="${pourcentage <= 75 && pourcentage > 50}" id="Bon">
+                <p data-th-text="'Votre score est de '+ ${nouveauScore} + ' sur ' + ${total}"></p>
+                <p data-th-text="${pourcentage} + '%' "></p>
+                <p data-th-text="'Vous êtes un peu au dessus de la moyenne, bien joué"></p>
+            </div>
+
+            <div data-th-if="${pourcentage <= 50 && pourcentage > 25}" id="Moyen">
+                <p data-th-text="'Votre score est de '+ ${nouveauScore} + ' sur ' + ${total}"></p>
+                <p data-th-text="${pourcentage} + '%' "></p>
+                <p data-th-text="'Un score assez moyen. Vous pouvez mieux faire'"></p>
+            </div>
+
+            <div data-th-if="${pourcentage <= 25 && pourcentage > 0}" id="pasOuf">
+                <p data-th-text="'Votre score est de '+ ${nouveauScore} + ' sur ' + ${total}"></p>
+                <p data-th-text="${pourcentage} + '%' "></p>
+                <p data-th-text="'C\'est pas terrible, mais avec un peu d\'entrainement vous pouvez faire un meilleur score'"></p>
+            </div>
+
+            <div data-th-if="${pourcentage == 0}"  id="nul">
+                <p data-th-text="'Votre score est de '+ ${nouveauScore} + ' sur ' + ${total}"></p>
+                <p data-th-text="${pourcentage} + '%' "></p>
+                <p data-th-text="'Vous êtes sûr que vous avez regardé One Piece ?'"></p>
+            </div>
+        </div>
+    </datablock>
+        
+    </div>
+
+</main>
+
+</html>

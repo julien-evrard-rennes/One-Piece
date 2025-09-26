@@ -5,53 +5,53 @@
                                                 title='Fin de partie' )}">
 
 <main>
-    <h1 data-th-text="'Fin de partie' "> </h1>
+    <h1 data-th-text="'Fin de partie' "></h1>
 
     <div class="resultatFinal">
-    <div data-th-if="${pourcentage} == 100" id="Parfait">
+        <div data-th-if="${pourcentage} == 100" id="Parfait">
             <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
             <p data-th-text="${pourcentage} + '%' "></p>
             <p data-th-text="'C\'est impressionnant, vous connaissez tout sur ' + ${nomComplet}"></p>
         </div>
 
-    <div data-th-if="${pourcentage < 100 && pourcentage > 75}" id="tresBon">
-        <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
-        <p data-th-text="${pourcentage} + '%' "></p>
-        <p data-th-text="'Bravo, vous connaissez très bien ' + ${nomComplet}"></p>
-    </div>
+        <div data-th-if="${pourcentage < 100 && pourcentage > 75}" id="tresBon">
+            <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
+            <p data-th-text="${pourcentage} + '%' "></p>
+            <p data-th-text="'Bravo, vous connaissez très bien ' + ${nomComplet}"></p>
+        </div>
 
-    <div data-th-if="${pourcentage <= 75 && pourcentage > 50}" id="Bon">
-        <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
-        <p data-th-text="${pourcentage} + '%' "></p>
-        <p data-th-text="'Visiblement vous connaissez assez bien ' + ${nomComplet}"></p>
-    </div>
+        <div data-th-if="${pourcentage <= 75 && pourcentage > 50}" id="Bon">
+            <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
+            <p data-th-text="${pourcentage} + '%' "></p>
+            <p data-th-text="'Visiblement vous connaissez assez bien ' + ${nomComplet}"></p>
+        </div>
 
-    <div data-th-if="${pourcentage <= 50 && pourcentage > 25}" >
-        <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
-        <p data-th-text="${pourcentage} + '%' "></p>
-        <p data-th-text="'Le personnage de '  + ${nomComplet} + ' ne vous est pas inconnu, mais vous avez des lacunes'"></p>
-    </div>
+        <div data-th-if="${pourcentage <= 50 && pourcentage > 25}">
+            <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
+            <p data-th-text="${pourcentage} + '%' "></p>
+            <p data-th-text="'Le personnage de '  + ${nomComplet} + ' ne vous est pas inconnu, mais vous avez des lacunes'"></p>
+        </div>
 
-    <div data-th-if="${pourcentage <= 25 && pourcentage > 0}" id="pasOuf">
-        <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
-        <p data-th-text="${pourcentage} + '%' "></p>
-        <p data-th-text="'Vous ne semblez connaitre que très peu de chose sur '  + ${nomComplet}"></p>
-    </div>
+        <div data-th-if="${pourcentage <= 25 && pourcentage > 0}" id="pasOuf">
+            <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
+            <p data-th-text="${pourcentage} + '%' "></p>
+            <p data-th-text="'Vous ne semblez connaitre que très peu de chose sur '  + ${nomComplet}"></p>
+        </div>
 
-    <div data-th-if="${pourcentage == 0}"  id="nul">
-        <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
-        <p data-th-text="${pourcentage} + '%' "></p>
-        <p data-th-text="'Perdu. '  + ${nomComplet} + ' vous est totalement inconnu'"></p>
-    </div>
-    </div>
+        <div data-th-if="${pourcentage == 0}" id="nul">
+            <p data-th-text="'Votre score est de '+ ${score} + ' sur ' + ${total}"></p>
+            <p data-th-text="${pourcentage} + '%' "></p>
+            <p data-th-text="'Perdu. '  + ${nomComplet} + ' vous est totalement inconnu'"></p>
+        </div>
 
+    </div>
 
     <div class="choix">
-            <div>
-                <button><a href="/jeu/etape_melange">REJOUER AVEC UN AUTRE PERSONNAGE</a></button>
-                <button><a href="/jeu/">REVENIR A L'ACCUEIL</a></button>
-            </div>
-    </div> 
+        <div class="presentation-bouton">
+            <button><a href="/jeu/etape_melange">REJOUER AVEC UN AUTRE PERSONNAGE</a></button>
+            <button><a href="/jeu/">REVENIR A L'ACCUEIL</a></button>
+        </div>
+    </div>
 
 </main>
 
