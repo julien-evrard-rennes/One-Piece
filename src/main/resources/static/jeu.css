@@ -3,7 +3,11 @@ main {
     background-color: rgb(253 253 253 / 56%)
 }
 
-body { background-image: url("/images/image_de_fond.png") }
+body {
+    background-image: url("/images/image_de_fond.png");
+    background-size: 100%;
+}
+
 
 h2 {
     font-style:oblique;
@@ -11,6 +15,8 @@ h2 {
     margin:10px;
     padding:5px;
 }
+
+/* TABLEAU DE TIRAGE */
 
 table.tirage tr {
     display: flex;
@@ -43,14 +49,9 @@ table.tirage th.interclasse {
     color: #b33939;
 }
 
-div.presentation, data-th-block.presentation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width:90%;
-    flex-wrap: wrap;
-    padding: 10px;
-}
+
+
+/* Div SCORE */
 
 div.score {
     font-family: sans-serif;
@@ -60,20 +61,6 @@ div.score {
     justify-content: flex-end;
     padding: 5px;
     margin-right:15%;
-}
-
-div.presentation div.score{
-    width: 300%;
-}
-
-div.presentation-bouton {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 90%;
-    flex-wrap: nowrap;
-    padding: 10px;
-    justify-content: space-evenly;
 }
 
 div.choix{
@@ -86,7 +73,8 @@ div.choix{
 }
 
 div.choix div.choix_mystere {
-    background-color: #bff8dd;
+    background-image: url("/images/image_persos1.jpg");
+    background-size: 80%;
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -94,10 +82,29 @@ div.choix div.choix_mystere {
     align-content: center;
     padding:10px;
     justify-content: space-between;
+    border: 2px solid #aa9d9d;
+}
+
+div.choix div.choix_mystere:hover {
+    background-image: url("/images/image_persos2.jpg");
+    box-shadow: 0 1px 8px #ddd;
+    cursor: pointer;
+}
+
+div.choix a {
+    display: flex;
+    width: 100%;
+    color: black;
+    text-decoration: none;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
 }
 
 div.choix div.choix_prime {
-    background-color: #92a0fa;
+    background-image: url("/images/image_primes1.jpg");
+    background-size: 90%;
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -105,10 +112,18 @@ div.choix div.choix_prime {
     align-content: center;
     padding:10px;
     justify-content: space-between;
+    border: 2px solid #aa9d9d;
+}
+
+div.choix div.choix_prime:hover {
+    background-image: url("/images/image_primes2.jpg");
+    box-shadow: 0 1px 8px #ddd;
+    cursor: pointer;
 }
 
 div.choix div.choix_age {
-    background-color: #f3a4c2;
+    background-image: url("/images/image_ages1.jpg");
+    background-size: 95%;
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -116,6 +131,13 @@ div.choix div.choix_age {
     align-content: center;
     padding:10px;
     justify-content: space-between;
+    border: 2px solid #aa9d9d;
+}
+
+div.choix div.choix_age:hover {
+    background-image: url("/images/image_ages2.jpg");
+    box-shadow: 2px 1px 8px #ddd;
+    cursor: pointer;
 }
 
 div.choix button {
@@ -133,10 +155,14 @@ div.choix button a{
     width:100%;
     color:white;
     text-decoration: none;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 div.choix button:hover {
     background-color: #5d85ec;
+    cursor: pointer;
 }
 
 
@@ -270,6 +296,7 @@ div.reponse button a{
 
 div.reponse button:hover {
     background-color: #5d85ec;
+    cursor: pointer;
 }
 
 div.reponse div{

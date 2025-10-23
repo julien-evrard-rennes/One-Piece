@@ -17,8 +17,6 @@ import java.util.List;
 @Repository
 public class GroupeDAOImpl implements GroupeDAO {
 
-
-
     private final String FIND_ALL = "SELECT g.id, g.nom_groupe, g.id_capitaine, p.nom, p.prenom, p.particule, p.surnom, p.sexe, p.age, p.prime " +
             "FROM groupe g LEFT JOIN personnage p ON g.id_capitaine = p.id ";
 

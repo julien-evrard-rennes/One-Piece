@@ -1,11 +1,5 @@
 @charset "UTF-8";
 
-
-nav ul {
-	display: flex;
-	justify-content: space-between;
-}
-
 .error {
 	color: red;
 	font-weight: bold;
@@ -14,11 +8,26 @@ nav ul {
 * {
 	margin: 0;
 	padding: 0;
-	font-family: Arial, Helvetica,;
+	font-family: Arial, Helvetica, sans-serif;
 	text-decoration: none;
 }
 
+h1 {
+	font-size: 1.8em;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+}
+
+
 /* Header */
+
 header {
 	display: flex;
 	justify-content: flex-end;
@@ -28,9 +37,18 @@ header {
 	box-shadow: 0 1px 8px #ddd;
 }
 
+nav ul {
+	display: flex;
+	justify-content: space-between;
+}
+
 #nav-title {
 	margin-right: auto;
 	font-size: 1.1em;
+}
+
+nav li {
+	font-size: 1.5em;
 }
 
 header li {
@@ -52,7 +70,10 @@ header a {
 
 header a:hover {
 	color: rgb(192, 0, 80);
+	cursor: pointer;
 }
+
+/* MAIN */
 
 main {
 	margin-top: 15px;
@@ -76,28 +97,7 @@ main h1 {
 	text-align: center;
 }
 
-.uniforme td{
-	border: none;
-	background-color: #e9e2e2;
-}
-
-
-body {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 100vh;
-	font-family: Arial, Helvetica, sans-serif;
-	margin: 0;
-}
-
-header {
-	padding: 5px;
-}
-
-h1 {
-	font-size: 1.8em;
-}
+/* FOOTER */
 
 footer {
 	background-color: #777;
@@ -107,9 +107,55 @@ footer {
 	height: auto;
 }
 
-nav li {
-	font-size: 1.5em;
+/* IMAGE D'ACCUEIL */
+
+div.image_accueil {
+	background-image: url("/images/frise_personnages.png");
+	background-size:800px;
+	width: 800px;
+	height: 250px;
 }
+
+div.image_accueil:hover{
+	background-image: url("/images/frise_personnages2.png");
+}
+
+/* DIV PRESENTATION */
+
+div.presentation, div.presentation_op, data-th-block.presentation {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width:90%;
+	flex-wrap: wrap;
+	padding: 10px;
+}
+
+div.presentation_op a{
+	color: #0f0e40;
+	text-transform: uppercase;
+}
+
+div.presentation_op a:hover{
+	color: #353468;
+	cursor: pointer;
+}
+
+div.presentation div.score{
+	width: 300%;
+}
+
+div.presentation-bouton {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 90%;
+	flex-wrap: nowrap;
+	padding: 10px;
+	justify-content: space-evenly;
+}
+
+/* TABLEAU */
 
 table {
 	font-family: Arial, Helvetica, sans-serif;
@@ -151,6 +197,8 @@ table a:hover, table a:active {
 	background-color: #004040;
 }
 
+/* Formulaire */
+
 form {
 	background-color: #f2f2f2;
 }
@@ -158,6 +206,8 @@ form {
 form h1 {
 	margin: 15px;
 }
+
+/* Classe flex outer */
 
 .flex-outer li {
 	display: flex;
@@ -176,6 +226,7 @@ form h1 {
 
 .flex-outer li a:hover {
 	background-color: #b68888;
+	cursor: pointer;
 }
 
 
@@ -217,8 +268,15 @@ form h1 {
 
 .flex-outer a li:hover {
 	background: #e4b1b1;
+	cursor: pointer;
 }
 
+/* Classe uniforme */
+
+.uniforme td{
+	border: none;
+	background-color: #e9e2e2;
+}
 
 .uniforme input[type="button"] {
 	 margin-left: auto;
@@ -233,6 +291,8 @@ form h1 {
 .uniforme input[type="button"]:hover, li.bouton a:hover, .flex-outer li button:hover  {
 	background: #8e6d6d;
 }
+
+/* Boutons et liens en forme de boutons */
 
  li.bouton a{
 	margin-left: auto;
@@ -256,6 +316,7 @@ a.bouton {
 
 a.bouton:hover {
 	background-color: #c58282;
+	cursor: pointer;
 }
 
  select#idGroupes{
